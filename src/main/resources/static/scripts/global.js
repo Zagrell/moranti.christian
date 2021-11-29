@@ -8,13 +8,13 @@ navBar.innerHTML=`
 <a href="../html/overview.html"><img class="logo" src="/logo.png" alt="logo"></a>
 <div class="middle">
     <a href="../html/overview.html">
-        <p>Overblik</p>
+        <p><b>Overblik</b></p>
     </a>
     <a href="../html/cars.html">
-        <p>Biler</p>
+        <p><b>Biler</b></p>
     </a>
     <a href="../html/employees.html">
-        <p>Ansatte</p>
+        <p><b>Ansatte</b></p>
     </a>
 </div>
 <div class="end">

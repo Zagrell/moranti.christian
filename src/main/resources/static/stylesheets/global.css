@@ -14,7 +14,7 @@
 }
 
 #nav-bar .end{
-    width: 300px
+    width: 18.75rem;
 }
 
 #nav-bar a {
@@ -26,24 +26,24 @@
 }
 
 #nav-bar p {
-    color: black;
+    color: #ffffff;
     padding: 1rem 2rem;
-    font-size: 20px;
+    font-size: 1rem;
     font-family: "Muli", sans-serif;
     text-decoration: none;
 
 }
 
 .logo {
-    height: 75px;
-    width: 300px;
+    height: 4.69rem;
+    width: 18.75rem;
 }
 
 /*With help from https://stackoverflow.com/questions/7849112/css-how-to-add-round-corners-when-hover-li-element/7849193*/
 #nav-bar p:hover {
     background-color: mintcream;
     cursor: pointer;
-    color: black;
+    color: #143c5a;
     border-radius: 10px 10px 10px 10px;
 }
 
