@@ -5,7 +5,7 @@ const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML=`
 
-<a href="../html/overview.html"><img class="logo" src="../pngegg.png" alt="logo"></a>
+<a href="../html/overview.html"><img class="logo" src="/logo.png" alt="logo"></a>
 <div>
     <a href="../html/overview.html">
         <p>Overblik</p>
