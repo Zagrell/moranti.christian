@@ -44,6 +44,18 @@ public class Employees {
         }
     }
 
+    @PatchMapping("/employees/{id}")
+    public String patchEmployeeById(@PathVariable Long id, @RequestBody Employee employeeToUpdateWith) {
+        return employeeRepository.findById(id).map(foundEmployee -> {
+            if (employeeToUpdateWith.getWorkPhoneNumber() != null) foundEmployee.setWorkPhoneNumber(employeeToUpdateWith.getWorkPhoneNumber());
+            if (employeeToUpdateWith.getName() != null) foundEmployee.setName(employeeToUpdateWith.getName());
+            if (employeeToUpdateWith.getType() != null) foundEmployee.setType(employeeToUpdateWith.getType());
+
+            employeeRepository.save(foundEmployee);
+            return "Employee was updated";
+        }).orElse("Employee was not found");
+    }
+
     @DeleteMapping("/employees/{id}")
     public void deleteCarByCarNumber(@PathVariable Long id) {
         employeeRepository.deleteById(id);

@@ -21,7 +21,7 @@ public class Car {
     private String licencePlate;
 
     @Column
-    private int watchPhoneNumber;
+    private String watchPhoneNumber;
 
     @Column
     private String type;
