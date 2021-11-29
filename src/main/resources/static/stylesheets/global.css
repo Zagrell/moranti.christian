@@ -1,0 +1,39 @@
+
+/*nav bar */
+#nav-bar {
+    background-color: #143c5a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+}
+
+#nav-bar a {
+    text-decoration: none;
+}
+
+#nav-bar div {
+    display: flex;
+}
+
+#nav-bar p {
+    color: black;
+    padding: 1rem 2rem;
+    font-size: 20px;
+    font-family: "Muli", sans-serif;
+    text-decoration: none;
+
+}
+
+/*With help from https://stackoverflow.com/questions/7849112/css-how-to-add-round-corners-when-hover-li-element/7849193*/
+#nav-bar p:hover {
+    background-color: mintcream;
+    cursor: pointer;
+    color: black;
+    border-radius: 10px 10px 10px 10px;
+}
