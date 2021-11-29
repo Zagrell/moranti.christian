@@ -1,0 +1,21 @@
+.top-div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.middle-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+table{
+    width: 80%;
+    border-collapse: collapse;
+    font-family: "Muli", sans-serif;
+}
+
+thead{
+    background-color: darkgray;
+    border: solid gray 1px;
+}
