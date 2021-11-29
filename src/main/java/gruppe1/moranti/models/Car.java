@@ -15,10 +15,10 @@ public class Car {
 
     @Id
     @Column
-    private String licencePlate;
+    private Long carNumber;
 
     @Column
-    private int carNumber;
+    private String licencePlate;
 
     @Column
     private int watchPhoneNumber;

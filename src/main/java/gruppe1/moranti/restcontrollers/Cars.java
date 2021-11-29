@@ -19,9 +19,9 @@ public class Cars {
         return carRepository.findAll();
     }
 
-    @GetMapping("/cars/{licencePlate}")
-    public Car getCarById(@PathVariable String licencePlate) {
-        return carRepository.findById(licencePlate).get();
+    @GetMapping("/cars/{carNumber}")
+    public Car getCarById(@PathVariable Long carNumber) {
+        return carRepository.findById(carNumber).get();
     }
 
     @PostMapping("/cars")
@@ -29,22 +29,25 @@ public class Cars {
         return carRepository.save(newCar);
     }
 
-    @PostMapping("/cars/employees/{licencePlate}/{workPhoneNumber}")
-    public Car addEmployeeToCar(@PathVariable String licencePlate, @PathVariable int workPhoneNumber) {
-        System.out.print(licencePlate);
-        System.out.print(workPhoneNumber);
-        return null;
-    }
-
-    @PutMapping("/cars/{licencePlate}")
-    public Car updateCarByLicencePlate(@PathVariable String licencePlate, @RequestBody Car newCar) {
-        newCar.setLicencePlate(licencePlate);
+    @PostMapping("/cars/{carNumber}")
+    public Car addEmployee(@PathVariable Long carNumber, @RequestBody Car newCar) {
         return carRepository.save(newCar);
     }
 
-    @DeleteMapping("/cars/{licencePlate}")
-    public void deleteCarByLicencePlate(@PathVariable String licencePlate) {
-        carRepository.deleteById(licencePlate);
+    @PutMapping("/cars/{carNumber}")
+    public String updateCarByCarNumber(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
+        if (carRepository.existsById(carNumber)) {
+            carToUpdateWith.setCarNumber(carNumber);
+            carRepository.save(carToUpdateWith);
+            return "Car was created";
+        } else {
+            return "Car not found";
+        }
+    }
+
+    @DeleteMapping("/cars/{carNumber}")
+    public void deleteCarByCarNumber(@PathVariable Long carNumber) {
+        carRepository.deleteById(carNumber);
     }
 
 }

@@ -2,10 +2,7 @@ package gruppe1.moranti.models;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Table(name = "employees")
@@ -13,6 +10,10 @@ import javax.persistence.Table;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
     @Column
     private int workPhoneNumber;
 
@@ -21,5 +22,6 @@ public class Employee {
 
     @Column
     private String type;
+
 
 }
