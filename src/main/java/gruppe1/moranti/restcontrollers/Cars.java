@@ -45,7 +45,17 @@ public class Cars {
         }
     }
 
-    @PatchMapping("/cars/{id}")
+    @PatchMapping("/cars/{carNumber}")
+    public String patchCarById(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
+        return carRepository.findById(carNumber).map(foundCar -> {
+            if (carToUpdateWith.getLicencePlate() != null) foundCar.setLicencePlate(carToUpdateWith.getLicencePlate());
+            if (carToUpdateWith.getWatchPhoneNumber() != null) foundCar.setWatchPhoneNumber(carToUpdateWith.getWatchPhoneNumber());
+            if (carToUpdateWith.getType() != null) foundCar.setType(carToUpdateWith.getType());
+
+            carRepository.save(foundCar);
+            return "Car was updated";
+        }).orElse("Car was not found");
+    }
 
     @DeleteMapping("/cars/{carNumber}")
     public void deleteCarByCarNumber(@PathVariable Long carNumber) {

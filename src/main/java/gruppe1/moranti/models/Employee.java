@@ -15,7 +15,7 @@ public class Employee {
     private Long id;
 
     @Column
-    private int workPhoneNumber;
+    private String workPhoneNumber;
 
     @Column
     private String name;
