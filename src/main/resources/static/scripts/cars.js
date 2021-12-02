@@ -41,10 +41,16 @@ function constructCarTableRow(tableRow, car) {
 }
 
 function updateCar(car) {
-
-    return undefined;
 }
 
-function deleteCar(id) {
-    return undefined;
+function deleteCar(carId) {
+    fetch(baseURL + "/cars/" + carId, {
+        method: "DELETE"
+    }).then(response => {
+        if (response.status === 200) {
+            document.getElementById(carId).remove();
+        } else {
+            console.log(response.status);
+        }
+    })
 }
