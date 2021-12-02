@@ -25,19 +25,34 @@ h2, h3{
     justify-content: center;
 }
 
-.table table{
-
-}
-
 .middle-div table{
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    width: 85%;
+    font-family: "Muli", sans-serif;
 }
 
-table{
-    width: 85%;
-    border-collapse: collapse;
-    font-family: "Muli", sans-serif;
+.middle-div td {
+    padding: 1rem;
+    word-wrap: break-word;
+    max-width: 15rem;
+    text-align: center;
+}
+
+.middle-div tr{
+    border-bottom: 2px solid gray;
+}
+
+.middle-div tbody tr:hover {
+    background-color: #cbcbcb;
+}
+
+.middle-div th {
+    padding: 1rem;
 }
 
 table caption{
@@ -46,5 +61,4 @@ table caption{
 
 thead{
     background-color: darkgray;
-    border: solid gray 1px;
 }

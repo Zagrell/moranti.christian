@@ -1,16 +1,16 @@
-const shiftsTableBody = document.getElementById("watch-tbody");
+const shiftsTableBody = document.getElementById("shift-tbody");
 
-fetch(baseURL + "/watchleader")
+fetch(baseURL + "/shiftleader")
     .then(response => response.json())
     .then(setShiftLeaderValues)
 
 function setShiftLeaderValues(leader) {
-    document.getElementById("watch-leader-name").innerText = leader.name
-    document.getElementById("watch-leader-name").innerText = leader.workPhoneNumber;
+    document.getElementById("shift-leader-name").innerText = leader.name
+    document.getElementById("shift-leader-name").innerText = leader.workPhoneNumber;
 }
 
 
-fetch(baseURL + "/watches")
+fetch(baseURL + "/shifts")
     .then(response => response.json())
     .then(result => {
         result.map(createShiftTableRow)
@@ -29,6 +29,7 @@ function createShiftTableRow(shift) {
 
 function constructShiftTableRow(shiftTableRow, shift) {
 
+    console.log(shift);
     const carNumberTd = document.createElement("td");
     const shiftTelephoneTd = document.createElement("td");
     const licencePlateTd = document.createElement("td");
@@ -44,10 +45,11 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
     licencePlateTd.innerText = shift.car.licencePlate;
     employeeTd.innerText = shift.employee.name;
-    workTelePhoneTd.innerText = shift.employee.workTelephoneNumber;
+    workTelePhoneTd.innerText = shift.employee.workPhoneNumber;
     priorityTd.innerText = shift.priority;
 
-    if(shift.case !== null){
+
+    if(shift.case !== undefined){
         caseNumberTd.innerText = shift.case.caseNumber;
         typeTd.innerText = shift.case.type;
         areaTd.innerText = shift.case.area;
