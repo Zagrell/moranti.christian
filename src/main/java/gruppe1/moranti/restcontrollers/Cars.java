@@ -45,7 +45,7 @@ public class Cars {
         }
     }
 
-    @PatchMapping("/cars/{carNumber}")
+    @PatchMapping("/cars/{carNumber}")       
     public String patchCarById(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
         return carRepository.findById(carNumber).map(foundCar -> {
             if (carToUpdateWith.getLicencePlate() != null) foundCar.setLicencePlate(carToUpdateWith.getLicencePlate());
