@@ -8,7 +8,7 @@ public class OverviewContoller {
 
     @GetMapping("/")
     public String index(){
-        return "../resources/html/overview.html";
+        return "./html/overview.html";
     }
 
 }
