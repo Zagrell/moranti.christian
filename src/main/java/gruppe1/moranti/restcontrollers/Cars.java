@@ -30,7 +30,7 @@ public class Cars {
     }
 
     @PostMapping("/cars/{carNumber}")
-    public Car addEmployee(@PathVariable Long carNumber, @RequestBody Car newCar) {
+    public Car addCar(@PathVariable Long carNumber, @RequestBody Car newCar) {
         return carRepository.save(newCar);
     }
 
@@ -49,7 +49,7 @@ public class Cars {
     public String patchCarById(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
         return carRepository.findById(carNumber).map(foundCar -> {
             if (carToUpdateWith.getLicencePlate() != null) foundCar.setLicencePlate(carToUpdateWith.getLicencePlate());
-            if (carToUpdateWith.getWatchPhoneNumber() != null) foundCar.setWatchPhoneNumber(carToUpdateWith.getWatchPhoneNumber());
+            if (carToUpdateWith.getShiftPhoneNumber() != null) foundCar.setShiftPhoneNumber(carToUpdateWith.getShiftPhoneNumber());
             if (carToUpdateWith.getType() != null) foundCar.setType(carToUpdateWith.getType());
 
             carRepository.save(foundCar);
