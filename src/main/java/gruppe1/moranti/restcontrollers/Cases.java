@@ -48,8 +48,16 @@ public class Cases {
     public String patchCaseById(@PathVariable Long caseNumber, @RequestBody Case caseToUpdateWith) {
         return caseRepository.findById(caseNumber).map(foundCase -> {
             if (caseToUpdateWith.getArea() != null) foundCase.setArea(caseToUpdateWith.getArea());
-        })
+            if (caseToUpdateWith.getCaseType() != null) foundCase.setCaseType(caseToUpdateWith.getCaseType());
+
+            caseRepository.save(foundCase);
+            return "Case wam updated";
+        }).orElse("Case was not found");
     }
 
+    @DeleteMapping("/cases/{caseNumber}")
+    public void deleteCaseByCaseNumber(@PathVariable Long caseNumber) {
+        caseRepository.deleteById(caseNumber);
+    }
 
 }
