@@ -1,4 +1,4 @@
-const shiftesTableBody = document.getElementById("watch-tbody");
+const shiftsTableBody = document.getElementById("watch-tbody");
 
 fetch(baseURL + "/watchleader")
     .then(response => response.json())
@@ -11,7 +11,7 @@ function setShiftLeaderValues(leader) {
 
 
 fetch(baseURL + "/watches")
-    .then(respone => respone.json())
+    .then(response => response.json())
     .then(result => {
         result.map(createShiftTableRow)
     })
@@ -21,7 +21,7 @@ function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
     //matchTableRow.id = matches.id;
 
-    shiftesTableBody.appendChild(matchTableRow);
+    shiftsTableBody.appendChild(shiftTableRow);
 
     constructShiftTableRow(shiftTableRow, shift);
 

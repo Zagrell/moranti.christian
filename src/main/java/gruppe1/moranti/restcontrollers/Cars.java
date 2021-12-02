@@ -61,5 +61,4 @@ public class Cars {
     public void deleteCarByCarNumber(@PathVariable Long carNumber) {
         carRepository.deleteById(carNumber);
     }
-
 }
