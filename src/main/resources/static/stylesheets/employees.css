@@ -13,6 +13,28 @@ body {
     background-color: lightgrey;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    margin-left:-5px;
+    margin-right:-5px;
+}
+
+.column {
+    flex: 50%;
+    padding: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 50%;
+    border: 1px solid #ddd;
+}
+
 .center{
     margin-left: auto;
     margin-right: auto;
@@ -28,4 +50,7 @@ button:hover{
     cursor: pointer;
 }
 
-
+.hover-th:hover{
+    cursor: pointer;
+    background-color: #606060;
+}

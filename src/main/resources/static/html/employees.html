@@ -9,16 +9,19 @@
 <body>
 <nav id="nav-bar"></nav>
 
-<button id="new-employee-button">Opret ny ansat</button>
+<button class="new-employee- button">Ny ansat</button>
 
+<div class="row">
+<div class="column">
 <div class="table-div" class="table">
-    <table>
+    <table style="float:left">
     <caption><h2>Sanitører</h2></caption>
 
     <thead>
     <tr>
         <th>Navn</th>
         <th>Arbejdstelefon</th>
+
     </tr>
     </thead>
 
@@ -26,9 +29,10 @@
 
     </table>
 </div>
-
+    </div>
+    <div class="column">
 <div class="table-div" class="table">
-    <table>
+    <table style="float: right">
     <caption><h2>Vagtleder</h2></caption>
 
     <thead>
@@ -40,9 +44,9 @@
 
     <tbody id="shift-leader-tbody"></tbody>
     </table>
-
 </div>
-
+</div>
+</div>
 <div id="new-employee-modal" class="modal">
 
     <!-- Modal content -->
