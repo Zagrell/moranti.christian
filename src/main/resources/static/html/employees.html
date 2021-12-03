@@ -9,7 +9,7 @@
 <body>
 <nav id="nav-bar"></nav>
 
-<div id="create-employee-from">Tilføj ansat</div>
+<button id="new-employee-button">Opret ny ansat</button>
 
 <table>
     <caption><h2>Ansatte</h2></caption>
@@ -26,6 +26,19 @@
     <tbody id="shift-tbody"></tbody>
 </table>
 
+<div id="new-employee-modal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <h3>Opret ansat</h3>
+        <label for="new-employee-work-phone-number">Arbejdstelefon nummer</label><input type="text" id="new-employee-work-phone-number" placeholder="arbejdstelefon nummer">
+        <label for="new-employee-name">Ansattes navn</label><input type="text" id="new-employee-name" placeholder="navn">
+        <label for="new-employee-type">Ansvarsområde</label><input type="text" id="new-employee-type" placeholder="type">
+        <button id="new-car-submit">Opret ansat</button>
+    </div>
+</div>
 
 <script src="../scripts/global.js"></script>
 <script src="../scripts/employees.js"></script>
