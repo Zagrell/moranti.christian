@@ -9,6 +9,7 @@
 <body>
 <nav id="nav-bar"></nav>
 
+<button id="new-car-button">opret ny bil</button>
 <div class="table">
     <table>
         <thead>
@@ -22,6 +23,30 @@
         <tbody id="car-tbody"></tbody>
     </table>
 </div>
+
+<div id="new-car-modal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <h3>Opret ny bil</h3>
+        <label for="new-car-number">Bil nummer</label><input type="text" id="new-car-number" placeholder="bil nummer">
+        <label for="new-car-phone">Vagttelefon nummer</label><input type="text" id="new-car-phone" placeholder="vagttelefon nummer">
+        <label for="new-car-licence">Nummerplade</label><input type="text" id="new-car-licence" placeholder="nummer plade">
+        <label for="new-car-type">Bil type: </label><select id="new-car-type" name="type">
+            <option value="normal">Normal</option>
+            <option value="graffiti">Graffiti</option>
+        </select>
+        <button id="new-car-submit">Opret bil</button>
+    </div>
+
+</div>
+<p>hej</p>
+<p>hej</p>
+<p>hej</p>
+<p>hej</p>
+<p>hej</p>
 
 <script src="../scripts/global.js"></script>
 <script src="../scripts/cars.js"></script>

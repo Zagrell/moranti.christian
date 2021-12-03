@@ -1,4 +1,6 @@
 const carTbody = document.getElementById("car-tbody");
+const newCarModal = document.getElementById("new-car-modal");
+
 
 fetch(baseURL + "/cars")
     .then(response => response.json())
@@ -7,12 +9,16 @@ fetch(baseURL + "/cars")
     });
 
 
+
+
+
 function createCarTableRow(car) {
     const tableRow = document.createElement("tr");
     carTbody.appendChild(tableRow);
 
     constructCarTableRow(tableRow, car);
 }
+
 
 function constructCarTableRow(tableRow, car) {
     //Table data
@@ -53,4 +59,18 @@ function deleteCar(carId) {
             console.log(response.status);
         }
     })
+}
+
+document.getElementById("new-car-button").onclick = function () {
+    newCarModal.style.display = "block";
+}
+
+window.onclick = function(event) {
+    if (event.target === newCarModal) {
+        newCarModal.style.display = "none";
+    }
+}
+
+document.getElementsByClassName("close")[0].onclick = function () {
+    newCarModal.style.display = "none";
 }
