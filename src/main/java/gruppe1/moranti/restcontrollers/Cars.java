@@ -29,11 +29,6 @@ public class Cars {
         return carRepository.save(newCar);
     }
 
-    @PostMapping("/cars/{carNumber}")
-    public Car addCar(@PathVariable Long carNumber, @RequestBody Car newCar) {
-        return carRepository.save(newCar);
-    }
-
     @PutMapping("/cars/{carNumber}")
     public String updateCarByCarNumber(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
         if (carRepository.existsById(carNumber)) {

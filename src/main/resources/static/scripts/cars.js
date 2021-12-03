@@ -2,7 +2,6 @@ const carTbody = document.getElementById("car-tbody");
 const newCarModal = document.getElementById("new-car-modal");
 const newCarSubmit = document.getElementById("new-car-submit");
 
-
 fetch(baseURL + "/cars")
     .then(response => response.json())
     .then(cars => {
@@ -27,9 +26,13 @@ function constructCarTableRow(tableRow, car) {
 
     //Button consts
     const updateCarButton = document.createElement("button");
+    const acceptUpdateButton = document.createElement("button");
     const deleteCarButton = document.createElement("button");
+
     actionTd.appendChild(updateCarButton);
+    actionTd.appendChild(acceptUpdateButton);
     actionTd.appendChild(deleteCarButton);
+
 
     //Table data values
     carNumberTd.innerText = car.carNumber;
@@ -39,9 +42,71 @@ function constructCarTableRow(tableRow, car) {
 
     //Buttans
     updateCarButton.innerText = "Rediger";
+    acceptUpdateButton.innerText = "Gem";
+    acceptUpdateButton.style.display = "none";
     deleteCarButton.innerText = "Slet";
 
-    updateCarButton.addEventListener("click", () => updateCar(car));
+    //Update button event listner
+    updateCarButton.addEventListener("click", () => {
+        const carNumberInput = document.createElement("input");
+        const shiftPhoneNumberInput = document.createElement("input");
+        const licencePlateInput = document.createElement("input");
+        const typeSelect = document.createElement("select");
+
+        //CarNumber feltet sættet value for inputtet, og resettet innertext tomt
+        carNumberInput.type = "number";
+        carNumberInput.value = Number(carNumberTd.innerText);
+        carNumberTd.innerText = "";
+
+        //shiftPhoneNumber feltet sættet value for inputtet, og resettet innertext tomt
+        shiftPhoneNumberInput.value = shiftPhoneNumberTd.innerText;
+        shiftPhoneNumberTd.innerText = "";
+
+        //LicencePlate feltet sættet value for inputtet, og resettet innertext tomt
+        licencePlateInput.value = licencePlateTd.innerText;
+        licencePlateTd.innerText = "";
+
+        //Type feltet sættet value for inputtet, og resettet innertext tomt
+        const typeOptionNormal = document.createElement("option");
+        typeOptionNormal.innerText = "Normal";
+        typeOptionNormal.value = "normal";
+        const typeOptionGraffiti = document.createElement("option");
+        typeOptionGraffiti.innerText = "Graffiti";
+        typeOptionGraffiti.value = "graffiti";
+
+        typeSelect.appendChild(typeOptionNormal);
+        typeSelect.appendChild(typeOptionGraffiti);
+        typeSelect.value = typeTd.innerText;
+        typeTd.innerText = "";
+
+        //Alle table data appendes
+        carNumberTd.appendChild(carNumberInput);
+        shiftPhoneNumberTd.appendChild(shiftPhoneNumberInput);
+        licencePlateTd.appendChild(licencePlateInput);
+        typeTd.appendChild(typeSelect);
+
+        updateCarButton.style.display = "none";
+        acceptUpdateButton.style.display = "";
+    });
+
+    //Accept update
+    acceptUpdateButton.addEventListener("click", () => {
+
+        const carToUpdate = {
+            carNumber: Number(carNumberTd.firstChild.value),
+            licencePlate: licencePlateTd.firstChild.value,
+            shiftPhoneNumber: shiftPhoneNumberTd.firstChild.value,
+            type: typeTd.firstChild.value
+        };
+
+        fetch(baseURL + "/cars/" + car.carNumber, {
+            method: "PUT",
+            headers: {"Content-type": "application/json; charset=UTF-8"},
+            body: JSON.stringify(carToUpdate)
+        })
+    });
+
+    //Delete button event listner
     deleteCarButton.addEventListener("click", () => {
         fetch(baseURL + "/cars/" + car.carNumber, {
             method: "DELETE"
@@ -55,6 +120,7 @@ function constructCarTableRow(tableRow, car) {
     });
 
 
+    //Append tablerow
     tableRow.appendChild(carNumberTd);
     tableRow.appendChild(shiftPhoneNumberTd);
     tableRow.appendChild(licencePlateTd);
@@ -84,11 +150,6 @@ function createCar() {
         }
     })
 }
-
-function updateCar(car) {
-}
-
-
 
 newCarSubmit.addEventListener("click", () => createCar());
 
