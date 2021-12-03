@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+
 @Data
 @Table(name = "employees")
 @Entity
@@ -20,8 +21,9 @@ public class Employee {
     @Column
     private String name;
 
+    @Enumerated(value = EnumType.STRING)
     @Column
-    private String type;
+    private Responsibility responsibility;
 
 
 }

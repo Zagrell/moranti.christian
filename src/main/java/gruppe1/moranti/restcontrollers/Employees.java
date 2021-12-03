@@ -49,7 +49,7 @@ public class Employees {
         return employeeRepository.findById(id).map(foundEmployee -> {
             if (employeeToUpdateWith.getWorkPhoneNumber() != null) foundEmployee.setWorkPhoneNumber(employeeToUpdateWith.getWorkPhoneNumber());
             if (employeeToUpdateWith.getName() != null) foundEmployee.setName(employeeToUpdateWith.getName());
-            if (employeeToUpdateWith.getType() != null) foundEmployee.setType(employeeToUpdateWith.getType());
+            if (employeeToUpdateWith.getResponsibility() != null) foundEmployee.setResponsibility(employeeToUpdateWith.getResponsibility());
 
             employeeRepository.save(foundEmployee);
             return "Employee was updated";
