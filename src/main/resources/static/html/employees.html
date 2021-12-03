@@ -11,20 +11,37 @@
 
 <button id="new-employee-button">Opret ny ansat</button>
 
-<table>
-    <caption><h2>Ansatte</h2></caption>
+<div class="table-div" class="table">
+    <table>
+    <caption><h2>Sanitører</h2></caption>
+
     <thead>
     <tr>
         <th>Navn</th>
         <th>Arbejdstelefon</th>
-        <th>Ansvarsområde</th>
     </tr>
     </thead>
 
     <tbody id="employees-tbody"></tbody>
 
-    <tbody id="shift-tbody"></tbody>
-</table>
+    </table>
+</div>
+
+<div class="table-div" class="table">
+    <table>
+    <caption><h2>Vagtleder</h2></caption>
+
+    <thead>
+    <tr>
+        <th>Navn</th>
+        <th>Arbejdstelefon</th>
+    </tr>
+    </thead>
+
+    <tbody id="shift-leader-tbody"></tbody>
+    </table>
+
+</div>
 
 <div id="new-employee-modal" class="modal">
 
@@ -35,7 +52,12 @@
         <h3>Opret ansat</h3>
         <label for="new-employee-work-phone-number">Arbejdstelefon nummer</label><input type="text" id="new-employee-work-phone-number" placeholder="arbejdstelefon nummer">
         <label for="new-employee-name">Ansattes navn</label><input type="text" id="new-employee-name" placeholder="navn">
-        <label for="new-employee-responsibility">Ansvarsområde</label><input type="checkbox" id="new-employee-responsibility" placeholder="ansvarsområde">
+        <label for="new-employee-sanitary"><input type="checkbox" id="new-employee-sanitary" placeholder="sanitør">Sanitør</label>
+        <br>
+        <label for="new-employee-shift-leader"><input  type="checkbox" id="new-employee-shift-leader" placeholder="vagtleder">Vagtleder</label>
+        <br>
+        <label for="new-employee-intern"><input type="checkbox" id="new-employee-intern" placeholder="føl">Føl</label>
+        <br>
         <button id="new-employee-submit">Opret ansat</button>
     </div>
 </div>
