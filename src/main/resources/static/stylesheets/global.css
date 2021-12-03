@@ -1,4 +1,3 @@
-
 /*nav bar */
 #nav-bar {
     background-color: #143c5a;
@@ -160,6 +159,19 @@ table caption{
 
 thead{
     background-color: darkgray;
+}
+
+/*Made with help from https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
+Fjerner fra Crhome, Safari, Edge, Opera*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*Fjerne fra Firefox*/
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 

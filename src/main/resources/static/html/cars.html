@@ -9,8 +9,8 @@
 <body>
 <nav id="nav-bar"></nav>
 
-<button id="new-car-button">opret ny bil</button>
-<div class="table">
+<div class="table-div">
+
     <table>
         <thead>
             <tr>
@@ -18,6 +18,7 @@
                 <th>Vagttelefon</th>
                 <th>Nummerplade</th>
                 <th>Type</th>
+                <th class="hover-th" id="new-car-button">+ Ny Bil</th>
             </tr>
         </thead>
         <tbody id="car-tbody"></tbody>
@@ -31,7 +32,7 @@
         <span class="close">&times;</span>
         <br>
         <h3>Opret ny bil</h3>
-        <label for="new-car-number">Bil nummer</label><input type="text" id="new-car-number" placeholder="bil nummer">
+        <label for="new-car-number">Bil nummer</label><input type="number" id="new-car-number" placeholder="bil nummer">
         <label for="new-car-phone">Vagttelefon nummer</label><input type="text" id="new-car-phone" placeholder="vagttelefon nummer">
         <label for="new-car-licence">Nummerplade</label><input type="text" id="new-car-licence" placeholder="nummer plade">
         <label for="new-car-type">Bil type: </label><select id="new-car-type" name="type">
@@ -42,11 +43,6 @@
     </div>
 
 </div>
-<p>hej</p>
-<p>hej</p>
-<p>hej</p>
-<p>hej</p>
-<p>hej</p>
 
 <script src="../scripts/global.js"></script>
 <script src="../scripts/cars.js"></script>

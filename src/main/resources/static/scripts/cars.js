@@ -1,5 +1,6 @@
 const carTbody = document.getElementById("car-tbody");
 const newCarModal = document.getElementById("new-car-modal");
+const newCarSubmit = document.getElementById("new-car-submit");
 
 
 fetch(baseURL + "/cars")
@@ -7,10 +8,6 @@ fetch(baseURL + "/cars")
     .then(cars => {
         cars.map(createCarTableRow);
     });
-
-
-
-
 
 function createCarTableRow(car) {
     const tableRow = document.createElement("tr");
@@ -31,6 +28,8 @@ function constructCarTableRow(tableRow, car) {
     //Button consts
     const updateCarButton = document.createElement("button");
     const deleteCarButton = document.createElement("button");
+    actionTd.appendChild(updateCarButton);
+    actionTd.appendChild(deleteCarButton);
 
     //Table data values
     carNumberTd.innerText = car.carNumber;
@@ -43,23 +42,55 @@ function constructCarTableRow(tableRow, car) {
     deleteCarButton.innerText = "Slet";
 
     updateCarButton.addEventListener("click", () => updateCar(car));
-    deleteCarButton.addEventListener("click", () => deleteCar(car.id));
+    deleteCarButton.addEventListener("click", () => {
+        fetch(baseURL + "/cars/" + car.carNumber, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.status === 200) {
+                tableRow.remove();
+            } else {
+                console.log(response.status);
+            }
+        })
+    });
+
+
+    tableRow.appendChild(carNumberTd);
+    tableRow.appendChild(shiftPhoneNumberTd);
+    tableRow.appendChild(licencePlateTd);
+    tableRow.appendChild(typeTd);
+    tableRow.appendChild(actionTd);
+}
+
+function createCar() {
+    const carToCreate = {
+        carNumber: Number(document.getElementById("new-car-number").value),
+        licencePlate: document.getElementById("new-car-licence").value,
+        shiftPhoneNumber: document.getElementById("new-car-phone").value,
+        type: document.getElementById("new-car-type").value
+    }
+
+    fetch(baseURL + "/cars", {
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: JSON.stringify(carToCreate)
+    }).then(response => {
+        if (response.status === 200) {
+            newCarModal.style.display = "none";
+            createCarTableRow(carToCreate);
+        } else {
+            //Todo skal fange en error
+            console.log("Error fuck dig")
+        }
+    })
 }
 
 function updateCar(car) {
 }
 
-function deleteCar(carId) {
-    fetch(baseURL + "/cars/" + carId, {
-        method: "DELETE"
-    }).then(response => {
-        if (response.status === 200) {
-            document.getElementById(carId).remove();
-        } else {
-            console.log(response.status);
-        }
-    })
-}
+
+
+newCarSubmit.addEventListener("click", () => createCar());
 
 document.getElementById("new-car-button").onclick = function () {
     newCarModal.style.display = "block";
