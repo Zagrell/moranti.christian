@@ -1,5 +1,6 @@
 const employeesTableBody = document.getElementById("employees-tbody");
 const employeeFormParentDiv = document.getElementById("create-employee-from");
+const newEmployeeModal = document.getElementById("new-employee-modal");
 
 fetch(baseURL + "/employees")
     .then(response => response.json())
@@ -131,4 +132,16 @@ function deleteEmployee(employeeId) {
     })
 }
 
-document.getElementById("create-employee-from");
+document.getElementById("new-employee-button").onclick = function () {
+    newEmployeeModal.style.display = "block";
+}
+
+window.onclick = function (event) {
+    if (event.target === newEmployeeModal) {
+        newEmployeeModal.style.display = "none";
+    }
+}
+
+document.getElementsByClassName("close")[0].onclick = function () {
+    newEmployeeModal.style.display = "none";
+}
