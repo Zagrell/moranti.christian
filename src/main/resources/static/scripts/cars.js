@@ -103,6 +103,24 @@ function constructCarTableRow(tableRow, car) {
             method: "PUT",
             headers: {"Content-type": "application/json; charset=UTF-8"},
             body: JSON.stringify(carToUpdate)
+        }).then(response => {
+            if(response.status === 200) {
+                //Fjerne alle redigerbar felter
+                carNumberTd.innerHTML = "";
+                shiftPhoneNumberTd.innerHTML = "";
+                licencePlateTd.innerHTML = "";
+                typeTd.innerHTML = "";
+
+                //Sætter inner text til de updateret values
+                carNumberTd.innerText = carToUpdate.carNumber.toString();
+                shiftPhoneNumberTd.innerText = carToUpdate.shiftPhoneNumber;
+                licencePlateTd.innerText = carToUpdate.licencePlate;
+                typeTd.innerText = carToUpdate.type;
+
+                //Sætter display på buttons
+                updateCarButton.style.display = "";
+                acceptUpdateButton.style.display = "none";
+            }
         })
     });
 

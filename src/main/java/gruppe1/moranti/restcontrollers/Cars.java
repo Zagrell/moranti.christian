@@ -32,7 +32,9 @@ public class Cars {
     @PutMapping("/cars/{carNumber}")
     public String updateCarByCarNumber(@PathVariable Long carNumber, @RequestBody Car carToUpdateWith) {
         if (carRepository.existsById(carNumber)) {
-            carToUpdateWith.setCarNumber(carNumber);
+            if(!carToUpdateWith.getCarNumber().equals(carNumber)) {
+                carRepository.deleteById(carNumber);
+            }
             carRepository.save(carToUpdateWith);
             return "Car was created";
         } else {
