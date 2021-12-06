@@ -1,16 +1,6 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
 const newCaseModal = document.getElementById("new-case-modal");
 
-fetch(baseURL + "/shiftleader")
-    .then(response => response.json())
-    .then(setShiftLeaderValues)
-
-function setShiftLeaderValues(leader) {
-    document.getElementById("shift-leader-name").innerText = leader.name
-    document.getElementById("shift-leader-name").innerText = leader.workPhoneNumber;
-}
-
-
 fetch(baseURL + "/shifts")
     .then(response => response.json())
     .then(result => {
@@ -20,12 +10,9 @@ fetch(baseURL + "/shifts")
 
 function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
-    //matchTableRow.id = matches.id;
 
     shiftsTableBody.appendChild(shiftTableRow);
-
     constructShiftTableRow(shiftTableRow, shift);
-
 }
 
 function constructShiftTableRow(shiftTableRow, shift) {
@@ -42,15 +29,20 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const areaTd = document.createElement("td");
     const commentTd = document.createElement("td");
 
-    carNumberTd.innerText = shift.car.carNumber;
-    shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
-    licencePlateTd.innerText = shift.car.licencePlate;
-    employeeTd.innerText = shift.employee.name;
-    workTelephoneTd.innerText = shift.employee.workPhoneNumber;
+    if (shift.car != undefined) {
+        carNumberTd.innerText = shift.car.carNumber;
+        shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
+        licencePlateTd.innerText = shift.car.licencePlate;
+    }
+
+    if (shift.employee != undefined) {
+        employeeTd.innerText = shift.employee.name;
+        workTelephoneTd.innerText = shift.employee.workPhoneNumber;
+    }
+
     priorityTd.innerText = shift.priority;
 
-
-    if(shift.case !== undefined){
+    if(shift.case != undefined){
         caseNumberTd.innerText = shift.case.caseNumber;
         typeTd.innerText = shift.case.caseType;
         areaTd.innerText = shift.case.area;

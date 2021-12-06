@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 public class Employee {
 
+    public static Long shiftLeaderId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
