@@ -137,7 +137,7 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
 
 function createEmployee() {
     const employeeToCreate = {
-        workPhoneNumber: document.getElementById("new-employee-work-phone").value,
+        workPhoneNumber: document.getElementById("new-employee-work-phone-number").value,
         employeeName: document.getElementById("new-employee-name").value,
         responsibility: document.getElementById("new-employee-responsibility").value,
     }

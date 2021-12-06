@@ -3,6 +3,7 @@ package gruppe1.moranti.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -21,8 +22,9 @@ public class Employee {
     @Column
     private String employeeName;
 
+    @Enumerated
     @Column
-    private String responsibility;
+    private List<Responsibility> responsibility;
 
 
 }
