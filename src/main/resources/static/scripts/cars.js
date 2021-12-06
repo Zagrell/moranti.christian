@@ -164,7 +164,7 @@ function createCar() {
             createCarTableRow(carToCreate);
         } else {
             //Todo skal fange en error
-            console.log("Error fuck dig")
+            console.log("Error")
         }
     })
 }
