@@ -120,6 +120,9 @@ function constructCarTableRow(tableRow, car) {
                 //Sætter display på buttons
                 updateCarButton.style.display = "";
                 acceptUpdateButton.style.display = "none";
+
+                //Car Number opdateres så den kan slettes i samme ombæring som når den ændres
+                car.carNumber = carToUpdate.carNumber;
             }
         })
     });
