@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Entity
 public class Employee {
 
+    public static Long shiftLeaderId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -24,6 +26,4 @@ public class Employee {
     @Enumerated(value = EnumType.STRING)
     @Column
     private Responsibility responsibility;
-
-
 }

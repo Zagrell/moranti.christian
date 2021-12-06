@@ -4,8 +4,8 @@ import gruppe1.moranti.models.Employee;
 import gruppe1.moranti.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 public class Employees {
@@ -23,13 +23,24 @@ public class Employees {
         return employeeRepository.findById(id).get();
     }
 
-    @PostMapping("/employees")
-    public Employee addEmployee(@RequestBody Employee newEmployee) {
-        return employeeRepository.save(newEmployee);
+    @GetMapping("/employees/shiftleader")
+    public Employee getShiftLeader() {
+        try {
+            return getEmployeeById(Employee.shiftLeaderId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    @PostMapping("/employees/{id}")
-    public Employee addEmployee(@PathVariable Long id, @RequestBody Employee newEmployee) {
+    @PostMapping("/employees/shiftleader/{id}")
+    public Employee setShiftLeader(@PathVariable Long id) {
+        Employee.shiftLeaderId = id;
+        return getEmployeeById(Employee.shiftLeaderId);
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee newEmployee) {
         return employeeRepository.save(newEmployee);
     }
 
