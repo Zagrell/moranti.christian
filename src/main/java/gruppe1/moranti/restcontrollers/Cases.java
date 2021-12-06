@@ -28,7 +28,7 @@ public class Cases {
         return caseRepository.save(newCase);
     }
 
-    @PutMapping("/cases/{CaseNumber}")
+    @PutMapping("/cases/{caseNumber}")
     public String updateCaseByCaseNumber(@PathVariable Long caseNumber, @RequestBody Case caseToUpdateWith) {
         if (caseRepository.existsById(caseNumber)) {
             caseToUpdateWith.setCaseNumber(caseNumber);
