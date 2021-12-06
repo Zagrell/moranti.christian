@@ -83,7 +83,7 @@ button:hover{
 
     background-color: #fefefe;
     margin: 15% auto;
-    width: 11rem;
+    max-width: 13rem;
     padding: 0px 15px 15px 15px;
     border: 1px solid rgba(128, 128, 128, 0.39);
     border-radius: 10px;
