@@ -10,12 +10,9 @@ fetch(baseURL + "/shifts")
 
 function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
-    //matchTableRow.id = matches.id;
 
     shiftsTableBody.appendChild(shiftTableRow);
-
     constructShiftTableRow(shiftTableRow, shift);
-
 }
 
 function constructShiftTableRow(shiftTableRow, shift) {
