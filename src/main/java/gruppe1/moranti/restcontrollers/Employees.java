@@ -59,7 +59,7 @@ public class Employees {
     public String patchEmployeeById(@PathVariable Long id, @RequestBody Employee employeeToUpdateWith) {
         return employeeRepository.findById(id).map(foundEmployee -> {
             if (employeeToUpdateWith.getWorkPhoneNumber() != null) foundEmployee.setWorkPhoneNumber(employeeToUpdateWith.getWorkPhoneNumber());
-            if (employeeToUpdateWith.getName() != null) foundEmployee.setName(employeeToUpdateWith.getName());
+            if (employeeToUpdateWith.getEmployeeName() != null) foundEmployee.setEmployeeName(employeeToUpdateWith.getEmployeeName());
             if (employeeToUpdateWith.getResponsibility() != null) foundEmployee.setResponsibility(employeeToUpdateWith.getResponsibility());
 
             employeeRepository.save(foundEmployee);
@@ -71,7 +71,4 @@ public class Employees {
     public void deleteCarByCarNumber(@PathVariable Long id) {
         employeeRepository.deleteById(id);
     }
-
-
-
 }
