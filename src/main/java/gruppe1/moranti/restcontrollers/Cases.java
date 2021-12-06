@@ -28,11 +28,6 @@ public class Cases {
         return caseRepository.save(newCase);
     }
 
-    @PostMapping("/cases/{caseNumber}")
-    public Case addCar(@PathVariable Long caseNumber, @RequestBody Case newCase) {
-        return caseRepository.save(newCase);
-    }
-
     @PutMapping("/cases/{CaseNumber}")
     public String updateCaseByCaseNumber(@PathVariable Long caseNumber, @RequestBody Case caseToUpdateWith) {
         if (caseRepository.existsById(caseNumber)) {

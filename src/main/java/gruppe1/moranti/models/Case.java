@@ -13,11 +13,12 @@ public class Case {
     @Column
     private Long caseNumber;
 
-    @Column
-    private String area;
-
     @Enumerated(value = EnumType.STRING)
     @Column
     private CaseType caseType;
+
+    @Column
+    private String area;
+
 
 }

@@ -1,4 +1,5 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
+const newCaseModal = document.getElementById("new-case-modal");
 
 fetch(baseURL + "/shiftleader")
     .then(response => response.json())
@@ -34,7 +35,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const shiftTelephoneTd = document.createElement("td");
     const licencePlateTd = document.createElement("td");
     const employeeTd = document.createElement("td");
-    const workTelePhoneTd = document.createElement("td");
+    const workTelephoneTd = document.createElement("td");
     const priorityTd = document.createElement("td");
     const caseNumberTd = document.createElement("td");
     const typeTd = document.createElement("td");
@@ -45,20 +46,45 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
     licencePlateTd.innerText = shift.car.licencePlate;
     employeeTd.innerText = shift.employee.name;
-    workTelePhoneTd.innerText = shift.employee.workPhoneNumber;
+    workTelephoneTd.innerText = shift.employee.workPhoneNumber;
     priorityTd.innerText = shift.priority;
 
 
     if(shift.case !== undefined){
         caseNumberTd.innerText = shift.case.caseNumber;
-        typeTd.innerText = shift.case.type;
+        typeTd.innerText = shift.case.caseType;
         areaTd.innerText = shift.case.area;
     }else{
         const addCaseButton = document.createElement("button");
         addCaseButton.innerText = "➕";
         addCaseButton.addEventListener("click", () => {
-           //TO DO FOR ADD CASE TASK
+           newCaseModal.style.display = "block";
         });
+        caseNumberTd.appendChild(addCaseButton);
+
+        document.getElementById("new-case-submit")
+            .addEventListener("click", () => {
+                const caseToCreate = {
+                    caseNumber: document.getElementById("new-case-number").value,
+                    caseType: document.getElementById("new-case-type").value,
+                    area: document.getElementById("new-case-area").value
+                }
+                fetch(baseURL + "/cases", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json; charset=UTF-8"},
+                    body: JSON.stringify(caseToCreate)
+                }).then(response => {
+                    if (response.status === 200) {
+                        newCaseModal.style.display = "none";
+                        caseNumberTd.innerText = caseToCreate.caseNumber;
+                        typeTd.innerText = caseToCreate.caseType;
+                        areaTd.innerText = caseToCreate.area;
+                    } else {
+                        console.log("Error med at oprette en case")
+                    }
+                })
+            });
+
 
     }
     commentTd.innerText = shift.comment;
@@ -68,13 +94,23 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTableRow.appendChild(shiftTelephoneTd);
     shiftTableRow.appendChild(licencePlateTd);
     shiftTableRow.appendChild(employeeTd);
-    shiftTableRow.appendChild(workTelePhoneTd);
+    shiftTableRow.appendChild(workTelephoneTd);
     shiftTableRow.appendChild(priorityTd);
     shiftTableRow.appendChild(caseNumberTd);
     shiftTableRow.appendChild(typeTd);
     shiftTableRow.appendChild(areaTd);
     shiftTableRow.appendChild(commentTd);
 
+
 }
 
+window.onclick = function (event) {
+    if (event.target === newCaseModal) {
+        newCaseModal.style.display = "none";
+    }
+}
+
+document.getElementsByClassName("close")[0].onclick = function () {
+    newCaseModal.style.display = "none";
+}
 

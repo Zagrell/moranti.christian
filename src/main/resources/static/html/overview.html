@@ -19,65 +19,90 @@
 </div>
 <div class="table-div" class="table">
 
-        <table>
-            <caption><h2>Vagter</h2></caption>
-            <thead>
-            <tr>
-                <th>Bil#</th>
-                <th>Vagttelefon</th>
-                <th>Nummerplade</th>
-                <th>Sanitør</th>
-                <th>Arbejdstelefon</th>
-                <th>Prioritet</th>
-                <th>Sagsnummer</th>
-                <th>Type</th>
-                <th>Område</th>
-                <th>Bemærkning</th>
-            </tr>
-            </thead>
+    <table>
+        <caption><h2>Vagter</h2></caption>
+        <thead>
+        <tr>
+            <th>Bil#</th>
+            <th>Vagttelefon</th>
+            <th>Nummerplade</th>
+            <th>Sanitør</th>
+            <th>Arbejdstelefon</th>
+            <th>Prioritet</th>
+            <th>Sagsnummer</th>
+            <th>Type</th>
+            <th>Område</th>
+            <th>Bemærkning</th>
+        </tr>
+        </thead>
 
-            <tbody id="shift-tbody"></tbody>
-        </table>
-        <table>
-            <caption><h3>Grafitti</h3></caption>
-            <thead>
-            <tr>
-                <th>Bil#</th>
-                <th>Vagttelefon</th>
-                <th>Nummerplade</th>
-                <th>Sanitør</th>
-                <th>Arbejdstelefon</th>
-                <th>Prioritet</th>
-                <th>Sagsnummer</th>
-                <th>Type</th>
-                <th>Område</th>
-                <th>Bemærkning</th>
-            </tr>
-            </thead>
+        <tbody id="shift-tbody"></tbody>
+    </table>
+    <table>
+        <caption><h3>Grafitti</h3></caption>
+        <thead>
+        <tr>
+            <th>Bil#</th>
+            <th>Vagttelefon</th>
+            <th>Nummerplade</th>
+            <th>Sanitør</th>
+            <th>Arbejdstelefon</th>
+            <th>Prioritet</th>
+            <th>Sagsnummer</th>
+            <th>Type</th>
+            <th>Område</th>
+            <th>Bemærkning</th>
+        </tr>
+        </thead>
 
-            <tbody id="grafitti-tbody"></tbody>
-        </table>
-        <table>
-            <caption><h3>Føl</h3></caption>
-            <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Føl</th>
-                <th>Arbejdstelefon</th>
-                <th>Prioritet</th>
-                <th>Sagsnummer</th>
-                <th>Type</th>
-                <th>Område</th>
-                <th>Bemærkning</th>
-            </tr>
-            </thead>
+        <tbody id="grafitti-tbody"></tbody>
+    </table>
+    <table>
+        <caption><h3>Føl</h3></caption>
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Føl</th>
+            <th>Arbejdstelefon</th>
+            <th>Prioritet</th>
+            <th>Sagsnummer</th>
+            <th>Type</th>
+            <th>Område</th>
+            <th>Bemærkning</th>
+        </tr>
+        </thead>
 
-            <tbody id="foal-tbody"></tbody>
-        </table>
+        <tbody id="foal-tbody"></tbody>
+    </table>
 </div>
 
+<div id="new-case-modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <h3>Tildel ny sag</h3>
+        <label for="new-case-number">Sagsnummer</label><input type="number" id="new-case-number">
+        <label for="new-case-type">Type</label><select name="type" id="new-case-type">
+        <option value="AFDÆK">Afdæk</option>
+        <option value="BRAND">Brand</option>
+        <option value="CORONA">Corona</option>
+        <option value="KLOAK">Kloak</option>
+        <option value="MILJØSKADE">Miljøskade</option>
+        <option value="POLITI">Politi</option>
+        <option value="SKAFOR" style="color: red">SKAFOR</option>
+        <option value="SKYBRUD">Skybrud</option>
+        <option value="STORM">Storm</option>
+        <option value="VAND">Vand</option>
+        <option value="ANDET">Andet</option>
+    </select>
+        <label for="new-case-area">Område</label><input type="text" id="new-case-area">
+        <br>
+        <button id="new-case-submit">Tildel sag</button>
+    </div>
+</div>
 
 <script src="../scripts/global.js"></script>
 <script src="../scripts/overview.js"></script>

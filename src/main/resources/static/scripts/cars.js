@@ -169,7 +169,7 @@ function createCar() {
             //Todo skal fange en error
             console.log("Error med at oprette en bil")
         }
-    })
+    });
 }
 
 newCarSubmit.addEventListener("click", () => createCar());
