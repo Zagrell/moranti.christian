@@ -1,6 +1,6 @@
 const employeesTableBody = document.getElementById("employees-tbody");
-const employeeFormParentDiv = document.getElementById("create-employee-from");
 const newEmployeeModal = document.getElementById("new-employee-modal");
+const newEmployeeSubmit = document.getElementById("new-employee-submit");
 
 fetch(baseURL + "/employees")
     .then(response => response.json())
@@ -10,8 +10,6 @@ fetch(baseURL + "/employees")
 
 function createEmployeeTableRow(employee) {
     const employeeTableRow = document.createElement("tr");
-    employeeTableRow.id = employee.id;
-
     employeesTableBody.appendChild(employeeTableRow);
 
     constructEmployeeTableRow(employeeTableRow, employee);
@@ -19,118 +17,145 @@ function createEmployeeTableRow(employee) {
 }
 
 function constructEmployeeTableRow(employeeTableRow, employee) {
+    //TD
+    const workPhoneNumberTd = document.createElement("td");
+    const employeeNameTd = document.createElement("td");
+    const responsibilityTd = document.createElement("td");
+    const actionTd = document.createElement("td");
 
-    employeeTableRow.innerHTML = `
-        <td>
-            <a href="../html/employees.html?id=${employee.id}">
-                <p class="row-employee-name">${escapeHTML(employee.name)}</p>
-            </a>
-        </td>   
-        <td>
-            <p class="row-employee-workPhoneNumber">${escapeHTML(employee.workPhoneNumber)}</p>
-        </td>    
-        <td>
-            <p class="row-employee-workPhoneNumber">${escapeHTML(employee.type)}</p>
-        </td>
-        <td>
-            <button onclick="deleteEmployee(${employee.id})">❌</button>
-        </td>    
-    `;
+    //BTN
+    const updateEmployeeButton = document.createElement("button");
+    const acceptUpdateButton = document.createElement("button");
+    const deleteEmployeeButton = document.createElement("button");
 
-    document.getElementById(`update-btn-${employee.id}`)
-        .addEventListener("click", () => updateEmployee)
+    actionTd.appendChild(updateEmployeeButton);
+    actionTd.appendChild(acceptUpdateButton);
+    actionTd.appendChild(deleteEmployeeButton);
 
+    //TD val.
+    workPhoneNumberTd.innerText = employee.workPhoneNumber;
+    employeeNameTd.innerText = employee.name;
+    responsibilityTd.innerText = employee.responsibility;
+
+    //BTNS
+    updateEmployeeButton.innerText = "Rediger";
+    acceptUpdateButton.innerText = "Gem";
+    acceptUpdateButton.style.display = "none";
+    deleteEmployeeButton.innerText = "Slet";
+
+    //Update btn EL
+    updateEmployeeButton.addEventListener("click", () => {
+        const workPhoneNumberInput = document.createElement("input");
+        const nameInput = document.createElement("input");
+        const responsibilitySelect = document.createElement("select");
+
+        //Arbejds tlf sætter val
+        workPhoneNumberInput.value = workPhoneNumberTd.innerText;
+        workPhoneNumberTd.innerText = "";
+
+        //Navn sætter val
+        nameInput.value = employeeNameTd.innerText;
+        employeeNameTd.innerText = "";
+
+        //Ansvarsområde sætter val
+        const responsibilityOptionDriver = document.createElement("option");
+        responsibilityOptionDriver.innerText = "Sanitør";
+        responsibilityOptionDriver.value = "sanitør"
+        const responsibilityOptionShiftLeader = document.createElement("option");
+        responsibilityOptionShiftLeader.innerText = "Vagtleder";
+        responsibilityOptionShiftLeader.value = "vagtleder";
+        const responsibilityOptionFoal = document.createElement("option");
+        responsibilityOptionFoal.innerText = "Føl";
+        responsibilityOptionFoal.value = "føl";
+
+        responsibilitySelect.appendChild(responsibilityOptionDriver);
+        responsibilitySelect.appendChild(responsibilityOptionShiftLeader);
+        responsibilitySelect.appendChild(responsibilityOptionFoal);
+        responsibilitySelect.value = responsibilityTd.innerText;
+        responsibilityTd.innerText = "";
+
+        //Tables appendes
+        workPhoneNumberTd.appendChild(workPhoneNumberInput);
+        employeeNameTd.appendChild(nameInput);
+        responsibilityTd.appendChild(responsibilitySelect);
+
+        updateEmployeeButton.style.display = "none";
+        acceptUpdateButton.style.display = "";
+    });
+
+    //Accepter opdatering
+    acceptUpdateButton.addEventListener("click", () => {
+
+        const employeeToUpdate = {
+            workPhoneNumber: workPhoneNumberTd.firstChild.value,
+            employeeName: employeeNameTd.firstChild.value,
+            responsibility: responsibilityTd.firstChild.value
+        };
+
+        fetch(baseURL + "/employees/" + employee.id, {
+            method: "PUT",
+            headers: {"Content-type": "application/json; charset=UTF-8"},
+            body: JSON.stringify(employeeToUpdate)
+        }).then(response => {
+            if (response.status === 200) {
+                //Fjerner redigerbare felter
+                workPhoneNumberTd.innerHTML = "";
+                employeeNameTd.innerHTML = "";
+                responsibilityTd.innerHTML = "";
+
+                //Sætter inner text til de opdateret values
+                workPhoneNumberTd.innerText = employeeToUpdate.workPhoneNumber;
+                employeeNameTd.innerText = employeeToUpdate.employeeName;
+                responsibilityTd.innerText = employeeToUpdate.responsibility;
+
+                //Display på btns
+                updateEmployeeButton.style.display = "";
+                acceptUpdateButton.style.display = "none";
+
+            }
+        })
+    });
+
+    // Slet knap e.l.
+    deleteEmployeeButton.addEventListener("click", () => {
+        fetch(baseURL + "/employees/" + employee.id, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.status === 200) {
+                employeeTableRow.remove();
+            } else {
+                console.log(response.status);
+            }
+        })
+    });
+
+    //Append TR
+    employeeTableRow.appendChild(workPhoneNumberTd);
+    employeeTableRow.appendChild(employeeNameTd);
+    employeeTableRow.appendChild(responsibilityTd);
 }
-
-const createEmployeeForm = `<div>
-    <label>Navn</label>
-    <input id="create-employee-name" placeholder="Name">    
-    <label>Arbejdstelefon</label>
-    <input id="create-employee-workPhoneNumber" placeholder="Arbejdstelefon">    
-    <label>Ansvarsområde</label>
-    <input id="create-employee-type" placeholder="Ansvarsområde">
-    <button onclick="createEmployee()">Tilføj ny ansat</button>    
-</div>`;
-
-function showEmployeeForm() {
-    employeeFormParentDiv.innerHTML = createEmployeeForm;
-}
-
 
 function createEmployee() {
     const employeeToCreate = {
-        name: document.getElementById("create-employee-name").value,
-        workPhoneNumber: document.getElementById("create-employee-workPhoneNumber").value,
-        type: document.getElementById("create-employee-type").value
-    };
-
+        workPhoneNumber: document.getElementById("new-employee-work-phone").value,
+        employeeName: document.getElementById("new-employee-name").value,
+        responsibility: document.getElementById("new-employee-responsibility").value,
+    }
     fetch(baseURL + "/employees", {
         method: "POST",
         headers: {"Content-type": "application/json; charset=UTF-8"},
         body: JSON.stringify(employeeToCreate)
-    }).then(response => response.json())
-        .then(employee => {
-            createEmployeeTableRow(employee);
-        }).catch(error => console.log(error));
-}
-
-function updateEmployee (employee) {
-    const tableRowToUpdate = document.getElementById(employee.id);
-
-    tableRowToUpdate.innerHTML = `
-        <td>
-            <input id="update-employee-name-${employee.id}" value="${escapeHTML(employee.name)}">
-        </td>   
-        <td>
-            <input id="update-employee-workPhoneNumber-${employee.id}" value="${escapeHTML(employee.workPhoneNumber)}">
-        </td>     
-        <td>
-            <input id="update-employee-type-${employee.id}" value="${escapeHTML(employee.type)}">
-        </td>
-        <td>
-            <button id="cancel-update-${employee.id}">✖</button>
-            <button onclick="updateEmployeeInBackend(${employee.id})">✅</button>
-        </td>
-           
-        <td>
-            <button onclick="deleteEmployee(${employee.id})">❌</button>
-        </td>    
-    
-    `
-}
-
-function updateEmployeeInBackend (employeeId) {
-    const tableRowToUpdate = document.getElementById(employeeId);
-
-    const employeeToUpdate = {
-        id: employeeId,
-        name: document.getElementById(`update-employee-name-${employeeId}`).value,
-        workPhoneNumber: document.getElementById(`update-employee-workPhoneNumber-${employeeId}`).value,
-        type: document.getElementById(`update-employee-type-${employeeId}`).value
-    };
-
-    fetch(baseURL + "/employees/" + employeeId, {
-        method: "PATCH",
-        headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: JSON.stringify(employeeToUpdate)
     }).then(response => {
         if (response.status === 200) {
-            constructEmployeeTableRow(tableRowToUpdate, employeeToUpdate);
+            newEmployeeModal.style.display = "none";
+            createEmployeeTableRow(employeeToCreate);
+        } else {
+            console.log("Error med at oprette ansat")
         }
     });
 }
 
-function deleteEmployee(employeeId) {
-    fetch(baseURL + "/employees/" + employeeId, {
-        method: "DELETE"
-    }).then(response => {
-        if (response.status === 20) {
-            document.getElementById(employeeId).remove()
-        } else {
-            console.log(response.status);
-        }
-    })
-}
+newEmployeeSubmit.addEventListener("click", () => createEmployee());
 
 document.getElementById("new-employee-button").onclick = function () {
     newEmployeeModal.style.display = "block";

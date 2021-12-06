@@ -19,11 +19,10 @@ public class Employee {
     private String workPhoneNumber;
 
     @Column
-    private String name;
+    private String employeeName;
 
-    @Enumerated(value = EnumType.STRING)
     @Column
-    private Responsibility responsibility;
+    private String responsibility;
 
 
 }
