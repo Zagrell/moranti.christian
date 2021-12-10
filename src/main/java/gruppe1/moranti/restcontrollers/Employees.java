@@ -1,6 +1,7 @@
 package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Employee;
+import gruppe1.moranti.models.Responsibility;
 import gruppe1.moranti.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +26,12 @@ public class Employees {
 
     @GetMapping("/employees/shiftleader")
     public Employee getShiftLeader() {
+        System.out.println(employeeRepository.findAllByResponsibilityContaining(Responsibility.VAGTLEDER));
+
         try {
             return getEmployeeById(Employee.shiftLeaderId);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return employeeRepository.findAllByResponsibilityContaining(Responsibility.VAGTLEDER).get(0);
         }
     }
 
