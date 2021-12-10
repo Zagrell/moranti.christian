@@ -36,7 +36,15 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     //TD val.
     workPhoneNumberTd.innerText = employee.workPhoneNumber;
     employeeNameTd.innerText = employee.employeeName;
-    responsibilityTd.innerText = employee.responsibility;
+    employee.responsibility.forEach(responsibility => {
+        if(responsibility === "SANITOR")
+            responsibilityTd.append("Sanitør ");
+        if(responsibility === "VAGTLEDER")
+            responsibilityTd.append("Vagtleder ");
+        if(responsibility === "FOL")
+            responsibilityTd.append("Føl ");
+
+    });
 
     //BTNS
     updateEmployeeButton.innerText = "Rediger";
@@ -141,15 +149,15 @@ function createEmployee() {
     console.log(document.getElementById("new-employee-sanitary").value);
     const responsibilities = []
     let counter = 0;
-    if(document.getElementById("new-employee-sanitary").checked){
+    if (document.getElementById("new-employee-sanitary").checked) {
         responsibilities[counter] = "SANITOR";
         counter++;
     }
-    if(document.getElementById("new-employee-shift-leader").checked){
+    if (document.getElementById("new-employee-shift-leader").checked) {
         responsibilities[counter] = "VAGTLEDER";
         counter++;
     }
-    if(document.getElementById("new-employee-intern").checked){
+    if (document.getElementById("new-employee-intern").checked) {
         responsibilities[counter] = "FOL";
     }
 
