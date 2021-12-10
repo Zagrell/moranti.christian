@@ -14,6 +14,13 @@ public class CaseType {
     @Id
     private String type;
 
+    public CaseType(String type) {
+        this.type = type;
+    }
+
+    public CaseType() {
+    }
+
     @Override
     public String toString(){
         return type;

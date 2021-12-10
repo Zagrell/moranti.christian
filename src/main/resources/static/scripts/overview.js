@@ -5,7 +5,8 @@ fetch(baseURL + "/shifts")
     .then(response => response.json())
     .then(result => {
         result.map(createShiftTableRow)
-    })
+        sortTable();
+    });
 
 
 function createShiftTableRow(shift) {
@@ -46,7 +47,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         caseNumberTd.innerText = shift.case.caseNumber;
         typeTd.innerText = shift.case.caseType;
         areaTd.innerText = shift.case.area;
-    }else{
+    } else {
         const addCaseButton = document.createElement("button");
         addCaseButton.innerText = "➕";
         addCaseButton.addEventListener("click", () => {
@@ -104,6 +105,31 @@ window.onclick = function (event) {
 
 document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
+}
+
+// With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
+
+function sortTable() {
+    let table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("shift-table");
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[5];
+            y = rows[i + 1].getElementsByTagName("td")[5];
+            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
+    }
 }
 
 
