@@ -36,7 +36,15 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     //TD val.
     workPhoneNumberTd.innerText = employee.workPhoneNumber;
     employeeNameTd.innerText = employee.employeeName;
-    responsibilityTd.innerText = employee.responsibility;
+    employee.responsibility.forEach(responsibility => {
+        if(responsibility === "SANITOR")
+            responsibilityTd.append("Sanitør ");
+        if(responsibility === "VAGTLEDER")
+            responsibilityTd.append("Vagtleder ");
+        if(responsibility === "FOL")
+            responsibilityTd.append("Føl ");
+
+    });
 
     //BTNS
     updateEmployeeButton.innerText = "Rediger";
@@ -50,6 +58,9 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         const nameInput = document.createElement("input");
         const responsibilitySelect = document.createElement("select");
 
+        responsibilitySelect.multiple = true;
+
+
         //Arbejds tlf sætter val
         workPhoneNumberInput.value = workPhoneNumberTd.innerText;
         workPhoneNumberTd.innerText = "";
@@ -61,13 +72,16 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         //Ansvarsområde sætter val
         const responsibilityOptionDriver = document.createElement("option");
         responsibilityOptionDriver.innerText = "Sanitør";
-        responsibilityOptionDriver.value = "sanitør"
+        responsibilityOptionDriver.value = "SANITOR"
         const responsibilityOptionShiftLeader = document.createElement("option");
         responsibilityOptionShiftLeader.innerText = "Vagtleder";
-        responsibilityOptionShiftLeader.value = "vagtleder";
+        responsibilityOptionShiftLeader.value = "VAGTLEDER";
         const responsibilityOptionFoal = document.createElement("option");
         responsibilityOptionFoal.innerText = "Føl";
-        responsibilityOptionFoal.value = "føl";
+        responsibilityOptionFoal.value = "FOL";
+        responsibilityOptionFoal.id = "foal" + employee.id;
+        responsibilityOptionDriver.id = "driver" + employee.id;
+        responsibilityOptionShiftLeader.id = "shift-leader" + employee.id;
 
         responsibilitySelect.appendChild(responsibilityOptionDriver);
         responsibilitySelect.appendChild(responsibilityOptionShiftLeader);
@@ -87,10 +101,25 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     //Accepter opdatering
     acceptUpdateButton.addEventListener("click", () => {
 
+        const responsibilities = [];
+        let counter = 0;
+        if(document.getElementById("driver" + employee.id).selected){
+            responsibilities[counter] = "SANITOR";
+            counter++;
+        }
+        if(document.getElementById("shift-leader" + employee.id).selected){
+            responsibilities[counter] = "VAGTLEDER";
+            counter++;
+        }
+        if(document.getElementById("foal" + employee.id).selected){
+            responsibilities[counter] = "FOL";
+        }
+
+
         const employeeToUpdate = {
             workPhoneNumber: workPhoneNumberTd.firstChild.value,
             employeeName: employeeNameTd.firstChild.value,
-            responsibility: responsibilityTd.firstChild.value
+            responsibility: responsibilities
         };
 
         fetch(baseURL + "/employees/" + employee.id, {
@@ -131,24 +160,24 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     });
 
     //Append TR
-    employeeTableRow.appendChild(workPhoneNumberTd);
     employeeTableRow.appendChild(employeeNameTd);
+    employeeTableRow.appendChild(workPhoneNumberTd);
     employeeTableRow.appendChild(responsibilityTd);
+    employeeTableRow.appendChild(actionTd);
 }
 
 function createEmployee() {
-    console.log(document.getElementById("new-employee-sanitary").value);
     const responsibilities = []
     let counter = 0;
-    if(document.getElementById("new-employee-sanitary").checked){
+    if (document.getElementById("new-employee-sanitary").checked) {
         responsibilities[counter] = "SANITOR";
         counter++;
     }
-    if(document.getElementById("new-employee-shift-leader").checked){
+    if (document.getElementById("new-employee-shift-leader").checked) {
         responsibilities[counter] = "VAGTLEDER";
         counter++;
     }
-    if(document.getElementById("new-employee-intern").checked){
+    if (document.getElementById("new-employee-intern").checked) {
         responsibilities[counter] = "FOL";
     }
 

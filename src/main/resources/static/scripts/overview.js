@@ -106,3 +106,4 @@ document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
 }
 
+
