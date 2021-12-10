@@ -35,6 +35,11 @@ public class Employees {
         }
     }
 
+    @GetMapping("/employees/shiftleaders")
+    public List<Employee> getShiftLeaders() {
+        return employeeRepository.findAllByResponsibilityContaining(Responsibility.VAGTLEDER);
+    }
+
     @PostMapping("/employees/shiftleader/{id}")
     public Employee setShiftLeader(@PathVariable Long id) {
         Employee.shiftLeaderId = id;
