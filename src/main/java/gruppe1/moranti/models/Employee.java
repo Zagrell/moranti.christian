@@ -24,7 +24,8 @@ public class Employee {
     @Column
     private String employeeName;
 
-    @Enumerated
+    @ElementCollection
+    @Enumerated(value = EnumType.STRING)
     @Column
     private List<Responsibility> responsibility;
 

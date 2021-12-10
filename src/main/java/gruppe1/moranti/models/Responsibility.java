@@ -1,12 +1,14 @@
 package gruppe1.moranti.models;
 
-import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
-@Table(name = "responsibility")
-@Entity
-public class Responsibility {
+public enum Responsibility {
+
+    SANITOR,
+    VAGTLEDER,
+    FOL
+
+
+
 }

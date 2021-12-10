@@ -104,7 +104,7 @@ function constructCarTableRow(tableRow, car) {
             headers: {"Content-type": "application/json; charset=UTF-8"},
             body: JSON.stringify(carToUpdate)
         }).then(response => {
-            if(response.status === 200) {
+            if (response.status === 200) {
                 //Fjerne alle redigerbar felter
                 carNumberTd.innerHTML = "";
                 shiftPhoneNumberTd.innerHTML = "";
@@ -178,7 +178,7 @@ document.getElementById("new-car-button").onclick = function () {
     newCarModal.style.display = "block";
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target === newCarModal) {
         newCarModal.style.display = "none";
     }
