@@ -37,7 +37,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     }
 
     if (shift.employee != undefined) {
-        employeeTd.innerText = shift.employee.name;
+        employeeTd.innerText = shift.employee.employeeName;
         workTelephoneTd.innerText = shift.employee.workPhoneNumber;
     }
 

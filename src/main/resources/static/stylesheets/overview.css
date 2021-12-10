@@ -1,47 +1,50 @@
-.top-div{
+.top-div {
     padding-left: 7.5%;
     display: flex;
     justify-content: space-around;
-
-
 }
 
-#shift-leader-div, #waiting-list-div{
+#shift-leader-div, #waiting-list-div {
     flex-grow: 1;
 }
-#procedure-tekst-div{
+
+#procedure-tekst-div {
     flex-grow: 3;
     align-self: flex-end;
 }
 
-.modal{
+.modal {
     display: none;
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     overflow: auto;
     z-index: 1;
-
 }
 
-.modal-content{
+.modal-content {
 
     background-color: #fefefe;
     margin: 15% auto;
     width: 11rem;
-    padding: 0px 15px 15px 15px;
+    padding: 0 15px 15px 15px;
     border: 1px solid rgba(128, 128, 128, 0.39);
     border-radius: 10px;
-
-
 }
-.modal-content h3{
+
+.modal-content h3 {
     margin: 0 0 8px 0;
 }
 
-.modal-content input, .modal-content select{
+.modal-content input, .modal-content select {
     margin-bottom: 8px;
+}
+
+.shift-leader-info {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.25rem;
 }
