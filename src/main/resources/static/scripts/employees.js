@@ -58,6 +58,9 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         const nameInput = document.createElement("input");
         const responsibilitySelect = document.createElement("select");
 
+        responsibilitySelect.multiple = true;
+
+
         //Arbejds tlf sætter val
         workPhoneNumberInput.value = workPhoneNumberTd.innerText;
         workPhoneNumberTd.innerText = "";
@@ -76,6 +79,9 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         const responsibilityOptionFoal = document.createElement("option");
         responsibilityOptionFoal.innerText = "Føl";
         responsibilityOptionFoal.value = "FOL";
+        responsibilityOptionFoal.id = "foal" + employee.id;
+        responsibilityOptionDriver.id = "driver" + employee.id;
+        responsibilityOptionShiftLeader.id = "shift-leader" + employee.id;
 
         responsibilitySelect.appendChild(responsibilityOptionDriver);
         responsibilitySelect.appendChild(responsibilityOptionShiftLeader);
@@ -95,10 +101,25 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     //Accepter opdatering
     acceptUpdateButton.addEventListener("click", () => {
 
+        const responsibilities = [];
+        let counter = 0;
+        if(document.getElementById("driver" + employee.id).selected){
+            responsibilities[counter] = "SANITOR";
+            counter++;
+        }
+        if(document.getElementById("shift-leader" + employee.id).selected){
+            responsibilities[counter] = "VAGTLEDER";
+            counter++;
+        }
+        if(document.getElementById("foal" + employee.id).selected){
+            responsibilities[counter] = "FOL";
+        }
+
+
         const employeeToUpdate = {
             workPhoneNumber: workPhoneNumberTd.firstChild.value,
             employeeName: employeeNameTd.firstChild.value,
-            responsibility: responsibilityTd.firstChild.value
+            responsibility: responsibilities
         };
 
         fetch(baseURL + "/employees/" + employee.id, {
@@ -146,7 +167,6 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
 }
 
 function createEmployee() {
-    console.log(document.getElementById("new-employee-sanitary").value);
     const responsibilities = []
     let counter = 0;
     if (document.getElementById("new-employee-sanitary").checked) {
