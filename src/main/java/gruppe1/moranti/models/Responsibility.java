@@ -9,6 +9,4 @@ public enum Responsibility {
     VAGTLEDER,
     FOL
 
-
-
 }

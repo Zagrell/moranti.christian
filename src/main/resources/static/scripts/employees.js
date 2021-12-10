@@ -17,6 +17,7 @@ function createEmployeeTableRow(employee) {
 }
 
 function constructEmployeeTableRow(employeeTableRow, employee) {
+    console.log(employee)
     //TD
     const workPhoneNumberTd = document.createElement("td");
     const employeeNameTd = document.createElement("td");
@@ -34,7 +35,7 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
 
     //TD val.
     workPhoneNumberTd.innerText = employee.workPhoneNumber;
-    employeeNameTd.innerText = employee.name;
+    employeeNameTd.innerText = employee.employeeName;
     responsibilityTd.innerText = employee.responsibility;
 
     //BTNS
@@ -75,8 +76,8 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         responsibilityTd.innerText = "";
 
         //Tables appendes
-        workPhoneNumberTd.appendChild(workPhoneNumberInput);
         employeeNameTd.appendChild(nameInput);
+        workPhoneNumberTd.appendChild(workPhoneNumberInput);
         responsibilityTd.appendChild(responsibilitySelect);
 
         updateEmployeeButton.style.display = "none";
@@ -136,10 +137,25 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
 }
 
 function createEmployee() {
+    console.log(document.getElementById("new-employee-sanitary").value);
+    const responsibilities = []
+    let counter = 0;
+    if(document.getElementById("new-employee-sanitary").checked){
+        responsibilities[counter] = "SANITOR";
+        counter++;
+    }
+    if(document.getElementById("new-employee-shift-leader").checked){
+        responsibilities[counter] = "VAGTLEDER";
+        counter++;
+    }
+    if(document.getElementById("new-employee-intern").checked){
+        responsibilities[counter] = "FOL";
+    }
+
     const employeeToCreate = {
         workPhoneNumber: document.getElementById("new-employee-work-phone-number").value,
         employeeName: document.getElementById("new-employee-name").value,
-        responsibility: document.getElementById("new-employee-responsibility").value,
+        responsibility: responsibilities
     }
     fetch(baseURL + "/employees", {
         method: "POST",

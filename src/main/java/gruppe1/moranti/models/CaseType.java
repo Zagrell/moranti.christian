@@ -1,17 +1,22 @@
 package gruppe1.moranti.models;
 
-public enum CaseType {
+import lombok.Data;
 
-    AFDÆK,
-    BRAND,
-    ANDET,
-    CORONA,
-    KLOAK,
-    MILJØSKADE,
-    POLITI,
-    SKAFOR,
-    SKYBRUD,
-    STORM,
-    VAND
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Data
+@Entity
+public class CaseType {
+
+    @Id
+    private String type;
+
+    @Override
+    public String toString(){
+        return type;
+    }
 
 }

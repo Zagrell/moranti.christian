@@ -13,8 +13,9 @@ public class Employees {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @GetMapping
-    public List<Employee> getEmployee() {
+
+    @GetMapping("/employees")
+    public List<Employee> getEmployees() {
         return employeeRepository.findAll();
     }
 
