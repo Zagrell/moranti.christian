@@ -61,13 +61,13 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         //Ansvarsområde sætter val
         const responsibilityOptionDriver = document.createElement("option");
         responsibilityOptionDriver.innerText = "Sanitør";
-        responsibilityOptionDriver.value = "sanitør"
+        responsibilityOptionDriver.value = "SANITOR"
         const responsibilityOptionShiftLeader = document.createElement("option");
         responsibilityOptionShiftLeader.innerText = "Vagtleder";
-        responsibilityOptionShiftLeader.value = "vagtleder";
+        responsibilityOptionShiftLeader.value = "VAGTLEDER";
         const responsibilityOptionFoal = document.createElement("option");
         responsibilityOptionFoal.innerText = "Føl";
-        responsibilityOptionFoal.value = "føl";
+        responsibilityOptionFoal.value = "FOL";
 
         responsibilitySelect.appendChild(responsibilityOptionDriver);
         responsibilitySelect.appendChild(responsibilityOptionShiftLeader);
@@ -131,9 +131,10 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
     });
 
     //Append TR
-    employeeTableRow.appendChild(workPhoneNumberTd);
     employeeTableRow.appendChild(employeeNameTd);
+    employeeTableRow.appendChild(workPhoneNumberTd);
     employeeTableRow.appendChild(responsibilityTd);
+    employeeTableRow.appendChild(actionTd);
 }
 
 function createEmployee() {
