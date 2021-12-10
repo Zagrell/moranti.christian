@@ -13,8 +13,7 @@ public class Case {
     @Column
     private Long caseNumber;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column
+    @OneToOne
     private CaseType caseType;
 
     @Column
