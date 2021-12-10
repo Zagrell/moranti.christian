@@ -29,5 +29,8 @@ public class Employee {
     @Column
     private List<Responsibility> responsibility;
 
+    public void setShiftLeaderId(Long shiftLeaderId) {
+        Employee.shiftLeaderId = shiftLeaderId;
+    }
 
 }

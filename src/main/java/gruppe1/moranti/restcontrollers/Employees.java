@@ -1,9 +1,11 @@
 package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Employee;
+import gruppe1.moranti.models.Responsibility;
 import gruppe1.moranti.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -13,7 +15,7 @@ public class Employees {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    @GetMapping
+    @GetMapping("/employees")
     public List<Employee> getEmployee() {
         return employeeRepository.findAll();
     }
@@ -58,9 +60,12 @@ public class Employees {
     @PatchMapping("/employees/{id}")
     public String patchEmployeeById(@PathVariable Long id, @RequestBody Employee employeeToUpdateWith) {
         return employeeRepository.findById(id).map(foundEmployee -> {
-            if (employeeToUpdateWith.getWorkPhoneNumber() != null) foundEmployee.setWorkPhoneNumber(employeeToUpdateWith.getWorkPhoneNumber());
-            if (employeeToUpdateWith.getEmployeeName() != null) foundEmployee.setEmployeeName(employeeToUpdateWith.getEmployeeName());
-            if (employeeToUpdateWith.getResponsibility() != null) foundEmployee.setResponsibility(employeeToUpdateWith.getResponsibility());
+            if (employeeToUpdateWith.getWorkPhoneNumber() != null)
+                foundEmployee.setWorkPhoneNumber(employeeToUpdateWith.getWorkPhoneNumber());
+            if (employeeToUpdateWith.getEmployeeName() != null)
+                foundEmployee.setEmployeeName(employeeToUpdateWith.getEmployeeName());
+            if (employeeToUpdateWith.getResponsibility() != null)
+                foundEmployee.setResponsibility(employeeToUpdateWith.getResponsibility());
 
             employeeRepository.save(foundEmployee);
             return "Employee was updated";
