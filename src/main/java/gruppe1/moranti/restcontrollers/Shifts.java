@@ -46,6 +46,7 @@ public class Shifts {
         }
 
         Shift shiftToUpdate = shiftRepository.findById(id).get();
+        shiftToUpdate.setPriority(Shift.OUT);
         shiftToUpdate.setShiftCase(newCase);
         return shiftRepository.save(shiftToUpdate);
     }

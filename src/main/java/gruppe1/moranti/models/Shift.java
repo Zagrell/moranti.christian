@@ -10,6 +10,9 @@ import java.util.List;
 @Entity
 public class Shift {
 
+    public static final int OUT = 101;
+    public static final int NOT_IN_SERVICE = 102;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

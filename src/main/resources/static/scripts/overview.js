@@ -1,6 +1,6 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
 const newCaseModal = document.getElementById("new-case-modal");
-
+const newCaseSubmit = document.getElementById("new-case-submit");
 
 fetch(baseURL + "/shifts")
     .then(response => response.json())
@@ -9,6 +9,16 @@ fetch(baseURL + "/shifts")
         sortTable();
     });
 
+fetch(baseURL + "/cases/casetypes")
+    .then(response => response.json())
+    .then(result => {
+        result.forEach(caseType => {
+            const caseTypeOption = document.createElement("option");
+            caseTypeOption.innerText = caseType.type;
+            caseTypeOption.value = caseType.type;
+            document.getElementById("new-case-type").appendChild(caseTypeOption);
+        })
+    });
 
 function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
@@ -41,22 +51,35 @@ function constructShiftTableRow(shiftTableRow, shift) {
     pickHandyman(shift, workTelephoneTd, handymanSelect);
     employeeTd.appendChild(handymanSelect);
 
-    priorityTd.innerText = shift.priority;
+    switch(shift.priority) {
+        case 101:
+            priorityTd.innerText = "Ude";
+            break;
+        case 102:
+            priorityTd.innerText = "Kører ikke";
+            break;
+        default:
+            priorityTd.innerText = shift.priority;
+    }
+
 
     if (shift.shiftCase != undefined) {
         caseNumberTd.innerText = shift.shiftCase.caseNumber;
-        typeTd.innerText = shift.shiftCase.caseType;
+        typeTd.innerText = shift.shiftCase.caseType.type;
         areaTd.innerText = shift.shiftCase.area;
     } else {
         const addCaseButton = document.createElement("button");
         addCaseButton.innerText = "➕";
+        const submitCaseButton = document.createElement("button");
+        submitCaseButton.innerText = "Tildel Sag";
+
         addCaseButton.addEventListener("click", () => {
+            newCaseSubmit.appendChild(submitCaseButton);
             newCaseModal.style.display = "block";
         });
         caseNumberTd.appendChild(addCaseButton);
 
-        document.getElementById("new-case-submit")
-            .addEventListener("click", () => {
+        submitCaseButton.addEventListener("click", () => {
                 const caseToCreate = {
                     caseNumber: document.getElementById("new-case-number").value,
                     caseType: document.getElementById("new-case-type").value,
@@ -72,6 +95,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
                         caseNumberTd.innerText = caseToCreate.caseNumber;
                         typeTd.innerText = caseToCreate.caseType;
                         areaTd.innerText = caseToCreate.area;
+                        priorityTd.innerText = "Ude";
                     } else {
                         console.log("Error med at oprette en case")
                     }
@@ -137,15 +161,16 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
 window.onclick = function (event) {
     if (event.target === newCaseModal) {
         newCaseModal.style.display = "none";
+        newCaseSubmit.innerHTML = "";
     }
 }
 
 document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
+    newCaseSubmit.innerHTML = "";
 }
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
-
 function sortTable() {
     let table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("shift-table");
