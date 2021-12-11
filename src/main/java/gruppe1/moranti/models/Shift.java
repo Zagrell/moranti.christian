@@ -11,6 +11,7 @@ import java.util.List;
 public class Shift {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
@@ -26,7 +27,7 @@ public class Shift {
     @OneToOne
     private Employee employee;
 
-    // @OneToOne(mappedBy = "watch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private Case case;
+    @OneToOne
+    private Case shiftCase;
 
 }

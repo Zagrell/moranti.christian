@@ -24,6 +24,11 @@ public class Employees {
         return employeeRepository.findById(id).get();
     }
 
+    @GetMapping("/employees/handymen")
+    public List<Employee> getHandymen() {
+        return employeeRepository.findAllByResponsibilityContaining(Responsibility.SANITOR);
+    }
+
     @GetMapping("/employees/shiftleader")
     public Employee getShiftLeader() {
         System.out.println(employeeRepository.findAllByResponsibilityContaining(Responsibility.VAGTLEDER));

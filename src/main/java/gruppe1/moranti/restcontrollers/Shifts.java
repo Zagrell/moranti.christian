@@ -1,6 +1,9 @@
 package gruppe1.moranti.restcontrollers;
 
+import gruppe1.moranti.models.Case;
 import gruppe1.moranti.models.Shift;
+import gruppe1.moranti.repositories.CaseRepository;
+import gruppe1.moranti.repositories.EmployeeRepository;
 import gruppe1.moranti.repositories.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,12 @@ public class Shifts {
 
     @Autowired
     ShiftRepository shiftRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
+    CaseRepository caseRepository;
 
     @GetMapping("/shifts")
     public List<Shift> getShifts() {
@@ -28,6 +37,25 @@ public class Shifts {
     public Shift addShift(@RequestBody Shift newShift) {
         newShift.setId(null);
         return shiftRepository.save(newShift);
+    }
+
+    @PostMapping("shifts/addnewcase/{id}")
+    public Shift addNewCase (@PathVariable Long id, @RequestBody Case newCase) {
+        if (!caseRepository.existsById(newCase.getCaseNumber())) {
+            caseRepository.save(newCase);
+        }
+
+        Shift shiftToUpdate = shiftRepository.findById(id).get();
+        shiftToUpdate.setShiftCase(newCase);
+        return shiftRepository.save(shiftToUpdate);
+    }
+
+    @PatchMapping("/shifts/handymanchange/{id}")
+    public Shift updateHandymanShift(@PathVariable Long id, @RequestBody Long employeeId) {
+        Shift shiftToUpdate = shiftRepository.findById(id).get();
+        shiftToUpdate.setEmployee(employeeRepository.findById(employeeId).get());
+
+        return shiftRepository.save(shiftToUpdate);
     }
 
     @PutMapping("/shifts/{id}")

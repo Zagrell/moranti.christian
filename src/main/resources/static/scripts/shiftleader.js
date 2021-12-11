@@ -37,7 +37,7 @@ function pickShiftLeader() {
 leaderSelect.addEventListener("change", () => {
         fetch(baseURL + "/employees/shiftleader/" + leaderSelect.value, {
             method: "POST",
-            headers: {"Content-type": "application/json; charset=UTF-8"},
+            headers: {"Content-type": "application/json; charset=UTF-8"}
         }).then(response => {
             if (response.status === 200) {
                 return response.json();

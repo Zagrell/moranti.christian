@@ -1,6 +1,7 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
 const newCaseModal = document.getElementById("new-case-modal");
 
+
 fetch(baseURL + "/shifts")
     .then(response => response.json())
     .then(result => {
@@ -36,22 +37,21 @@ function constructShiftTableRow(shiftTableRow, shift) {
         licencePlateTd.innerText = shift.car.licencePlate;
     }
 
-    if (shift.employee != undefined) {
-        employeeTd.innerText = shift.employee.employeeName;
-        workTelephoneTd.innerText = shift.employee.workPhoneNumber;
-    }
+    const handymanSelect = document.createElement("select");
+    pickHandyman(shift, workTelephoneTd, handymanSelect);
+    employeeTd.appendChild(handymanSelect);
 
     priorityTd.innerText = shift.priority;
 
-    if(shift.case != undefined){
-        caseNumberTd.innerText = shift.case.caseNumber;
-        typeTd.innerText = shift.case.caseType;
-        areaTd.innerText = shift.case.area;
+    if (shift.shiftCase != undefined) {
+        caseNumberTd.innerText = shift.shiftCase.caseNumber;
+        typeTd.innerText = shift.shiftCase.caseType;
+        areaTd.innerText = shift.shiftCase.area;
     } else {
         const addCaseButton = document.createElement("button");
         addCaseButton.innerText = "➕";
         addCaseButton.addEventListener("click", () => {
-           newCaseModal.style.display = "block";
+            newCaseModal.style.display = "block";
         });
         caseNumberTd.appendChild(addCaseButton);
 
@@ -62,7 +62,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
                     caseType: document.getElementById("new-case-type").value,
                     area: document.getElementById("new-case-area").value
                 }
-                fetch(baseURL + "/cases", {
+                fetch(baseURL + "/shifts/addnewcase/" + shift.id, {
                     method: "POST",
                     headers: {"Content-type": "application/json; charset=UTF-8"},
                     body: JSON.stringify(caseToCreate)
@@ -96,6 +96,43 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
 
 }
+
+function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
+
+
+    fetch(baseURL + "/employees/handymen")
+        .then(response => response.json())
+        .then(result => {
+            result.forEach(handyman => {
+                const handymanOption = document.createElement("option");
+                handymanOption.innerText = handyman.employeeName;
+                handymanOption.value = handyman.id;
+
+                if (shift.employee != undefined && handymanOption.value == shift.employee.id) {
+                    handymanOption.selected = true;
+                    workPhoneNumberTd.innerText = handyman.workPhoneNumber;
+                }
+                handymanSelect.appendChild(handymanOption);
+            })
+
+            handymanSelect.addEventListener("change", () => {
+                fetch(baseURL + "/shifts/handymanchange/" + shift.id, {
+                    method: "PATCH",
+                    headers: {"Content-type": "application/json; charset=UTF-8"},
+                    body: JSON.stringify(handymanSelect.value)
+                }).then(response => {
+                    if(response.status === 200) {
+                        return response.json();
+                    } else {
+                        throw("Kan ikke ændre sanitør");
+                    }
+                }).then(result => {
+                    workPhoneNumberTd.innerText = result.employee.workPhoneNumber;
+                });
+            });
+        });
+}
+
 
 window.onclick = function (event) {
     if (event.target === newCaseModal) {
