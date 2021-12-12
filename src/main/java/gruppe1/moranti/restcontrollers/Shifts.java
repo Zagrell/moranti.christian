@@ -40,13 +40,26 @@ public class Shifts {
     }
 
     @PostMapping("shifts/addnewcase/{id}")
-    public Shift addNewCase (@PathVariable Long id, @RequestBody Case newCase) {
+    public Shift addNewCase(@PathVariable Long id, @RequestBody Case newCase) {
         if (!caseRepository.existsById(newCase.getCaseNumber())) {
             caseRepository.save(newCase);
         }
 
         Shift shiftToUpdate = shiftRepository.findById(id).get();
+
+        //update all prioities
+        List<Shift> shifts = shiftRepository.findAll();
+        shifts.forEach(shift -> {
+            if (100 >= shift.getPriority() && shift.getPriority() > shiftToUpdate.getPriority()) {
+                System.out.println(shift.getPriority());
+                shift.setPriority(shift.getPriority() - 1);
+            }
+        });
+        shiftRepository.saveAll(shifts);
+
         shiftToUpdate.setPriority(Shift.OUT);
+
+
         shiftToUpdate.setShiftCase(newCase);
         return shiftRepository.save(shiftToUpdate);
     }
@@ -61,7 +74,7 @@ public class Shifts {
 
     @PutMapping("/shifts/{id}")
     public String updateShiftById(@PathVariable Long id, @RequestBody Shift shiftToUpdateWith) {
-        if(shiftRepository.existsById(id)) {
+        if (shiftRepository.existsById(id)) {
             shiftToUpdateWith.setId(id);
             shiftRepository.save(shiftToUpdateWith);
             return "Shift was created";

@@ -2,12 +2,16 @@ const shiftsTableBody = document.getElementById("shift-tbody");
 const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
 
-fetch(baseURL + "/shifts")
-    .then(response => response.json())
-    .then(result => {
-        result.map(createShiftTableRow)
-        sortTable();
-    });
+fetchShifts();
+function fetchShifts() {
+    fetch(baseURL + "/shifts")
+        .then(response => response.json())
+        .then(result => {
+            shiftsTableBody.innerHTML = "";
+            result.map(createShiftTableRow)
+            sortTable();
+        });
+}
 
 fetch(baseURL + "/cases/casetypes")
     .then(response => response.json())
@@ -51,7 +55,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     pickHandyman(shift, workTelephoneTd, handymanSelect);
     employeeTd.appendChild(handymanSelect);
 
-    switch(shift.priority) {
+    switch (shift.priority) {
         case 101:
             priorityTd.innerText = "Ude";
             break;
@@ -80,28 +84,28 @@ function constructShiftTableRow(shiftTableRow, shift) {
         caseNumberTd.appendChild(addCaseButton);
 
         submitCaseButton.addEventListener("click", () => {
-                const caseToCreate = {
-                    caseNumber: document.getElementById("new-case-number").value,
-                    caseType: document.getElementById("new-case-type").value,
-                    area: document.getElementById("new-case-area").value
+            const caseToCreate = {
+                caseNumber: document.getElementById("new-case-number").value,
+                caseType: document.getElementById("new-case-type").value,
+                area: document.getElementById("new-case-area").value
+            }
+            fetch(baseURL + "/shifts/addnewcase/" + shift.id, {
+                method: "POST",
+                headers: {"Content-type": "application/json; charset=UTF-8"},
+                body: JSON.stringify(caseToCreate)
+            }).then(response => {
+                if (response.status === 200) {
+                    newCaseModal.style.display = "none";
+                    newCaseSubmit.innerHTML = "";
+                    caseNumberTd.innerText = caseToCreate.caseNumber;
+                    typeTd.innerText = caseToCreate.caseType;
+                    areaTd.innerText = caseToCreate.area;
+                    fetchShifts()
+                } else {
+                    console.log("Error med at oprette en case")
                 }
-                fetch(baseURL + "/shifts/addnewcase/" + shift.id, {
-                    method: "POST",
-                    headers: {"Content-type": "application/json; charset=UTF-8"},
-                    body: JSON.stringify(caseToCreate)
-                }).then(response => {
-                    if (response.status === 200) {
-                        newCaseModal.style.display = "none";
-                        caseNumberTd.innerText = caseToCreate.caseNumber;
-                        typeTd.innerText = caseToCreate.caseType;
-                        areaTd.innerText = caseToCreate.area;
-                        priorityTd.innerText = "Ude";
-                        sortTable();
-                    } else {
-                        console.log("Error med at oprette en case")
-                    }
-                })
-            });
+            })
+        });
 
 
     }
@@ -146,7 +150,7 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
                     headers: {"Content-type": "application/json; charset=UTF-8"},
                     body: JSON.stringify(handymanSelect.value)
                 }).then(response => {
-                    if(response.status === 200) {
+                    if (response.status === 200) {
                         return response.json();
                     } else {
                         throw("Kan ikke ændre sanitør");
@@ -158,7 +162,6 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
         });
 }
 
-
 window.onclick = function (event) {
     if (event.target === newCaseModal) {
         newCaseModal.style.display = "none";
@@ -166,15 +169,18 @@ window.onclick = function (event) {
     }
 }
 
+
 document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
     newCaseSubmit.innerHTML = "";
 }
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
+
+
 function sortTable() {
 
-    let table, rows, switching, i, x, y, shouldSwitch;
+    let table, rows, switching, i, x, y, shouldSwitch, xNum, yNum;
     table = document.getElementById("shift-table");
     switching = true;
     while (switching) {
@@ -184,19 +190,20 @@ function sortTable() {
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("td")[5];
             y = rows[i + 1].getElementsByTagName("td")[5];
-            // if (isNaN(x)) x = 100;
-            // if (isNaN(y)) y = 100;
-            console.log(x);
-            console.log(y);
-            if (Number(x.innerText) > Number(y.innerText)) {
+            xNum = isNaN(x.innerText) ? 100 : Number(x.innerText);
+            yNum = isNaN(y.innerText) ? 100 : Number(y.innerText);
+
+            console.log(xNum);
+            console.log(yNum);
+            if (xNum > yNum) {
                 shouldSwitch = true;
                 break;
             }
         }
         if (shouldSwitch) {
 
-            console.log(rows[i].parentNode.insertBefore(rows[i + 1], rows[i]));
-
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            console.log("i was here")
             switching = true;
         }
     }
