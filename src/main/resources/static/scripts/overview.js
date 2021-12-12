@@ -96,6 +96,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
                         typeTd.innerText = caseToCreate.caseType;
                         areaTd.innerText = caseToCreate.area;
                         priorityTd.innerText = "Ude";
+                        sortTable();
                     } else {
                         console.log("Error med at oprette en case")
                     }
@@ -172,6 +173,7 @@ document.getElementsByClassName("close")[0].onclick = function () {
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
 function sortTable() {
+
     let table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("shift-table");
     switching = true;
@@ -182,13 +184,19 @@ function sortTable() {
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("td")[5];
             y = rows[i + 1].getElementsByTagName("td")[5];
-            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            // if (isNaN(x)) x = 100;
+            // if (isNaN(y)) y = 100;
+            console.log(x);
+            console.log(y);
+            if (Number(x.innerText) > Number(y.innerText)) {
                 shouldSwitch = true;
                 break;
             }
         }
         if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+
+            console.log(rows[i].parentNode.insertBefore(rows[i + 1], rows[i]));
+
             switching = true;
         }
     }
