@@ -60,6 +60,18 @@ function constructShiftTableRow(shiftTableRow, shift) {
     switch (shift.priority) {
         case 101:
             priorityTd.innerText = "Ude";
+            carNumberTd.style.backgroundColor = "#8c1f1f";
+            shiftTelephoneTd.style.backgroundColor = "#8c1f1f";
+            licencePlateTd.style.backgroundColor = "#8c1f1f";
+            employeeTd.style.backgroundColor = "#8c1f1f";
+            workTelephoneTd.style.backgroundColor = "#8c1f1f";
+            priorityTd.style.backgroundColor = "#8c1f1f";
+            caseNumberTd.style.backgroundColor = "#8c1f1f";
+            typeTd.style.backgroundColor = "#8c1f1f";
+            areaTd.style.backgroundColor = "#8c1f1f";
+            commentTd.style.backgroundColor = "#8c1f1f";
+            actionsTd.style.backgroundColor = "#8c1f1f";
+
             break;
         case 102:
             priorityTd.innerText = "Kører ikke";
