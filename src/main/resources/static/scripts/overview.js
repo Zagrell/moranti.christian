@@ -76,7 +76,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         areaTd.innerText = shift.shiftCase.area;
 
         const removeCaseButton = document.createElement("button");
-        removeCaseButton.innerText = "Set ledig";
+        removeCaseButton.innerText = "Sæt ledig";
         actionsTd.appendChild(removeCaseButton);
         removeCaseButton.addEventListener("click", () => {
             fetch(baseURL + "/shifts/removecase/" + shift.id, {
