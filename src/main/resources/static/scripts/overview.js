@@ -83,8 +83,8 @@ function constructShiftTableRow(shiftTableRow, shift) {
                 method: "PATCH"
             }).then(response => {
                 if (response.status === 200) {
-                    fetchShifts();
                 }
+                fetchShifts();
             });
         })
     } else {
@@ -116,7 +116,9 @@ function constructShiftTableRow(shiftTableRow, shift) {
                     caseNumberTd.innerText = caseToCreate.caseNumber;
                     typeTd.innerText = caseToCreate.caseType;
                     areaTd.innerText = caseToCreate.area;
-                    fetchShifts()
+                    document.getElementById("new-case-number").value = "";
+                    document.getElementById("new-case-area").value = "";
+                    fetchShifts();
                 } else {
                     console.log("Error med at oprette en case")
                 }

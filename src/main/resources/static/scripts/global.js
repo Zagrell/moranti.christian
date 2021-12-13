@@ -5,7 +5,7 @@ const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML=`
 
-<a href="../html/overview.html"><img class="logo" src="../logo.png" alt="logo"></a>
+
 <div class="middle">
     <a href="../html/overview.html">
         <p><b>Overblik</b></p>
@@ -17,9 +17,7 @@ navBar.innerHTML=`
         <p><b>Ansatte</b></p>
     </a>
 </div>
-<div class="end">
 
-</div>
 `;
 
 

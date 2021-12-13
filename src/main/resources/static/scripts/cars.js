@@ -69,10 +69,10 @@ function constructCarTableRow(tableRow, car) {
         //Type feltet sættet value for inputtet, og resettet innertext tomt
         const typeOptionNormal = document.createElement("option");
         typeOptionNormal.innerText = "Normal";
-        typeOptionNormal.value = "normal";
+        typeOptionNormal.value = "Normal";
         const typeOptionGraffiti = document.createElement("option");
         typeOptionGraffiti.innerText = "Graffiti";
-        typeOptionGraffiti.value = "graffiti";
+        typeOptionGraffiti.value = "Graffiti";
 
         typeSelect.appendChild(typeOptionNormal);
         typeSelect.appendChild(typeOptionGraffiti);
@@ -164,6 +164,9 @@ function createCar() {
     }).then(response => {
         if (response.status === 200) {
             newCarModal.style.display = "none";
+            document.getElementById("new-car-number").value = "";
+            document.getElementById("new-car-licence").value = "";
+            document.getElementById("new-car-phone").value = "";
             createCarTableRow(carToCreate);
         } else {
             //Todo skal fange en error

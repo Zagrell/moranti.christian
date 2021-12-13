@@ -43,7 +43,6 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
             responsibilityTd.append("Vagtleder ");
         if(responsibility === "FOL")
             responsibilityTd.append("Føl ");
-
     });
 
     //BTNS
@@ -115,7 +114,6 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
             responsibilities[counter] = "FOL";
         }
 
-
         const employeeToUpdate = {
             workPhoneNumber: workPhoneNumberTd.firstChild.value,
             employeeName: employeeNameTd.firstChild.value,
@@ -136,12 +134,16 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
                 //Sætter inner text til de opdateret values
                 workPhoneNumberTd.innerText = employeeToUpdate.workPhoneNumber;
                 employeeNameTd.innerText = employeeToUpdate.employeeName;
-                responsibilityTd.innerText = employeeToUpdate.responsibility;
+                if(responsibilities.includes("SANITOR"))
+                    responsibilityTd.append("Sanitør ");
+                if(responsibilities.includes("VAGTLEDER"))
+                    responsibilityTd.append("Vagtleder ");
+                if(responsibilities.includes("FOL"))
+                    responsibilityTd.append("Føl ");
 
                 //Display på btns
                 updateEmployeeButton.style.display = "";
                 acceptUpdateButton.style.display = "none";
-
             }
         })
     });
@@ -193,10 +195,17 @@ function createEmployee() {
     }).then(response => {
         if (response.status === 200) {
             newEmployeeModal.style.display = "none";
-            createEmployeeTableRow(employeeToCreate);
+            document.getElementById("new-employee-work-phone-number").value = "";
+            document.getElementById("new-employee-name").value = "";
+            document.getElementById("new-employee-sanitary").checked = false;
+            document.getElementById("new-employee-shift-leader").checked = false;
+            document.getElementById("new-employee-intern").checked = false;
+            return response.json();
         } else {
             console.log("Error med at oprette ansat")
         }
+    }).then(result => {
+        createEmployeeTableRow(result);
     });
 }
 
