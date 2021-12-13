@@ -3,6 +3,7 @@ const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
 
 fetchShifts();
+
 function fetchShifts() {
     fetch(baseURL + "/shifts")
         .then(response => response.json())
@@ -44,6 +45,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const typeTd = document.createElement("td");
     const areaTd = document.createElement("td");
     const commentTd = document.createElement("td");
+    const actionsTd = document.createElement("td");
 
     if (shift.car != undefined) {
         carNumberTd.innerText = shift.car.carNumber;
@@ -68,9 +70,23 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
 
     if (shift.shiftCase != undefined) {
+
         caseNumberTd.innerText = shift.shiftCase.caseNumber;
         typeTd.innerText = shift.shiftCase.caseType.type;
         areaTd.innerText = shift.shiftCase.area;
+
+        const removeCaseButton = document.createElement("button");
+        removeCaseButton.innerText = "Set ledig";
+        actionsTd.appendChild(removeCaseButton);
+        removeCaseButton.addEventListener("click", () => {
+            fetch(baseURL + "/shifts/removecase/" + shift.id, {
+                method: "PATCH"
+            }).then(response => {
+                if (response.status === 200) {
+                    fetchShifts();
+                }
+            });
+        })
     } else {
         const addCaseButton = document.createElement("button");
         addCaseButton.innerText = "➕";
@@ -122,6 +138,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTableRow.appendChild(typeTd);
     shiftTableRow.appendChild(areaTd);
     shiftTableRow.appendChild(commentTd);
+    shiftTableRow.appendChild(actionsTd);
 
 
 }

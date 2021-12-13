@@ -72,6 +72,31 @@ public class Shifts {
         return shiftRepository.save(shiftToUpdate);
     }
 
+    @PatchMapping("shifts/removecase/{id}")
+    public Shift removeCase(@PathVariable Long id){
+        Shift shift = shiftRepository.findById(id).get();
+        Case shiftCase = shift.getShiftCase();
+        shift.setShiftCase(null);
+
+        int highestPrio = 0;
+        List<Shift> shifts = shiftRepository.findAll();
+
+        for(Shift foundShift : shifts){
+            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()){
+                highestPrio = foundShift.getPriority();
+            }
+        }
+        shift.setPriority(highestPrio+1);
+
+        shiftRepository.save(shift);
+        try {
+            caseRepository.delete(shiftCase);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return shift;
+    }
+
     @PutMapping("/shifts/{id}")
     public String updateShiftById(@PathVariable Long id, @RequestBody Shift shiftToUpdateWith) {
         if (shiftRepository.existsById(id)) {
