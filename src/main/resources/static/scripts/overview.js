@@ -45,13 +45,14 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const areaTd = document.createElement("td");
     const commentTd = document.createElement("td");
     const actionsTd = document.createElement("td");
+    actionsTd.style.display = "flex";
 
     //Definere en bil
-    if (shift.car != undefined) {
-        carNumberTd.innerText = shift.car.carNumber;
-        shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
-        licencePlateTd.innerText = shift.car.licencePlate;
-    }
+    const carSelect = document.createElement("select");
+    pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect);
+    carNumberTd.appendChild(carSelect);
+
+
 
     //Valg af sanitører
     const handymanSelect = document.createElement("select");
@@ -62,6 +63,8 @@ function constructShiftTableRow(shiftTableRow, shift) {
     switch (shift.priority) {
         case 101:
             priorityTd.innerText = "Ude";
+            shiftTableRow.style.backgroundColor = "#8c1f1f";
+            /*
             carNumberTd.style.backgroundColor = "#8c1f1f";
             shiftTelephoneTd.style.backgroundColor = "#8c1f1f";
             licencePlateTd.style.backgroundColor = "#8c1f1f";
@@ -73,7 +76,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
             areaTd.style.backgroundColor = "#8c1f1f";
             commentTd.style.backgroundColor = "#8c1f1f";
             actionsTd.style.backgroundColor = "#8c1f1f";
-
+            */
             break;
         case 102:
             priorityTd.innerText = "Kører ikke";
@@ -145,6 +148,26 @@ function constructShiftTableRow(shiftTableRow, shift) {
         <div id="comment-div-${shift.id}" contenteditable="true">${shift.comment}</div>
     `;
 
+    }
+    commentTd.innerText = shift.comment;
+
+    const deleteShiftButton = document.createElement("button");
+    deleteShiftButton.innerText = "❌";
+
+    deleteShiftButton.addEventListener("click", () => {
+        if (confirm("er du sikker på at du vil slette denne vagt?")) {
+            fetch(baseURL + "/shifts/" + shift.id, {
+                method: "DELETE"
+            }).then(response => {
+                if (response.status === 200) {
+                    fetchShifts();
+                }
+            });
+
+        }
+    });
+    actionsTd.appendChild(deleteShiftButton);
+
     commentTd.addEventListener("focusout", () => {
         fetch(baseURL + "/shifts/comment/" + shift.id, {
             method: "PATCH",
@@ -172,11 +195,71 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTableRow.appendChild(actionsTd);
 }
 
+function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
+    fetch(baseURL + "/cars/normal")
+        .then(response => response.json())
+        .then(result => {
+            let defaultOption;
+            if (shift.car == undefined) {
+                defaultOption = document.createElement("option");
+                defaultOption.defaultSelected = "true";
+                defaultOption.disabled = "true";
+                defaultOption.innerText = "vælg en bil";
+                carSelect.appendChild(defaultOption);
+            }
+            result.forEach(car => {
+                const carOption = document.createElement("option");
+                carOption.innerText = car.carNumber;
+                carOption.value = car.carNumber;
+
+                if (shift.car != undefined && carOption.value == shift.car.carNumber) {
+                    carOption.selected = true;
+                    shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
+                    licencePlateTd.innerText = shift.car.licencePlate;
+                }
+
+                carSelect.appendChild(carOption);
+            });
+
+            carSelect.addEventListener("change", () => {
+
+                fetch(baseURL + "/shifts/carchange/" + shift.id, {
+                    method: "PATCH",
+                    headers: {"Content-type": "application/json; charset=UTF-8"},
+                    body: carSelect.value
+                })
+                    .then(response => {
+                        if (response.status === 200) {
+                            if (defaultOption != null){
+                                console.log("hej med dig ")
+                                carSelect.remove(defaultOption);
+                                defaultOption = null;
+                            }
+                            return response.json();
+                        } else {
+                            throw "Kan ikke ændre bil";
+                        }
+                    }).then(result => {
+                    shiftTelephoneTd.innerText = result.car.shiftPhoneNumber;
+                    licencePlateTd.innerText = result.car.licencePlate;
+                });
+            });
+        });
+}
+
 function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
 
     fetch(baseURL + "/employees/handymen")
         .then(response => response.json())
         .then(result => {
+            let defaultOption;
+            if (shift.employee == undefined) {
+                defaultOption = document.createElement("option");
+                defaultOption.defaultSelected = "true";
+                defaultOption.disabled = "true";
+                defaultOption.innerText = "vælg en sanitør";
+                handymanSelect.appendChild(defaultOption);
+            }
             result.forEach(handyman => {
                 const handymanOption = document.createElement("option");
                 handymanOption.innerText = handyman.employeeName;
@@ -196,6 +279,7 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
                     body: JSON.stringify(handymanSelect.value)
                 }).then(response => {
                     if (response.status === 200) {
+                        handymanSelect.removeChild(defaultOption);
                         return response.json();
                     } else {
                         throw("Kan ikke ændre sanitør");
@@ -245,5 +329,18 @@ function sortTable() {
         }
     }
 }
+
+document.getElementById("add-shift-button").addEventListener("click", () => {
+    fetch(baseURL + "/shifts", {
+        method: "POST"
+    }).then(response => {
+        if (response.status === 200)
+            fetchShifts();
+    })
+
+
+})
+
+
 
 
