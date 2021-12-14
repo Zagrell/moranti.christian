@@ -141,7 +141,7 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
                 if(responsibilities.includes("FOL"))
                     responsibilityTd.append("Føl ");
 
-                //Display på btns
+                //Display på buttons
                 updateEmployeeButton.style.display = "";
                 acceptUpdateButton.style.display = "none";
             }
@@ -161,7 +161,7 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
         })
     });
 
-    //Append TR
+    //Append table row
     employeeTableRow.appendChild(employeeNameTd);
     employeeTableRow.appendChild(workPhoneNumberTd);
     employeeTableRow.appendChild(responsibilityTd);
