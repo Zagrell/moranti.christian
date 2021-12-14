@@ -48,3 +48,7 @@
     justify-content: flex-start;
     gap: 0.25rem;
 }
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+}

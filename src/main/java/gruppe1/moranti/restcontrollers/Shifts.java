@@ -64,6 +64,14 @@ public class Shifts {
         return shiftRepository.save(shiftToUpdate);
     }
 
+    @PatchMapping("/shifts/comment/{id}")
+    public Shift updateComment(@PathVariable Long id, @RequestBody String comment) {
+        Shift shiftToUpdate = shiftRepository.findById(id).get();
+        shiftToUpdate.setComment(comment);
+
+        return shiftRepository.save(shiftToUpdate);
+    }
+
     @PatchMapping("/shifts/handymanchange/{id}")
     public Shift updateHandymanShift(@PathVariable Long id, @RequestBody Long employeeId) {
         Shift shiftToUpdate = shiftRepository.findById(id).get();

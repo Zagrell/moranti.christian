@@ -34,7 +34,6 @@ function createShiftTableRow(shift) {
 
 function constructShiftTableRow(shiftTableRow, shift) {
 
-    console.log(shift);
     const carNumberTd = document.createElement("td");
     const shiftTelephoneTd = document.createElement("td");
     const licencePlateTd = document.createElement("td");
@@ -47,16 +46,19 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const commentTd = document.createElement("td");
     const actionsTd = document.createElement("td");
 
+    //Definere en bil
     if (shift.car != undefined) {
         carNumberTd.innerText = shift.car.carNumber;
         shiftTelephoneTd.innerText = shift.car.shiftPhoneNumber;
         licencePlateTd.innerText = shift.car.licencePlate;
     }
 
+    //Valg af sanitører
     const handymanSelect = document.createElement("select");
     pickHandyman(shift, workTelephoneTd, handymanSelect);
     employeeTd.appendChild(handymanSelect);
 
+    //Prioriteter
     switch (shift.priority) {
         case 101:
             priorityTd.innerText = "Ude";
@@ -80,7 +82,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
             priorityTd.innerText = shift.priority;
     }
 
-
+    //Tilføj sag og sæt ledig
     if (shift.shiftCase != undefined) {
 
         caseNumberTd.innerText = shift.shiftCase.caseNumber;
@@ -136,11 +138,26 @@ function constructShiftTableRow(shiftTableRow, shift) {
                 }
             })
         });
-
-
     }
-    commentTd.innerText = shift.comment;
 
+    //Bemærkninger
+    commentTd.innerHTML = `
+        <div id="comment-div-${shift.id}" contenteditable="true">${shift.comment}</div>
+    `;
+
+    commentTd.addEventListener("focusout", () => {
+        fetch(baseURL + "/shifts/comment/" + shift.id, {
+            method: "PATCH",
+            headers: {"Content-type": "application/json; charset=UTF-8"},
+            body: document.getElementById("comment-div-" + shift.id).innerText
+        }).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw("Kan ikke tilføje bemærkning");
+            }
+        })
+    })
 
     shiftTableRow.appendChild(carNumberTd);
     shiftTableRow.appendChild(shiftTelephoneTd);
@@ -153,12 +170,9 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTableRow.appendChild(areaTd);
     shiftTableRow.appendChild(commentTd);
     shiftTableRow.appendChild(actionsTd);
-
-
 }
 
 function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
-
 
     fetch(baseURL + "/employees/handymen")
         .then(response => response.json())
@@ -200,15 +214,12 @@ window.onclick = function (event) {
     }
 }
 
-
 document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
     newCaseSubmit.innerHTML = "";
 }
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
-
-
 function sortTable() {
 
     let table, rows, switching, i, x, y, shouldSwitch, xNum, yNum;
@@ -223,18 +234,13 @@ function sortTable() {
             y = rows[i + 1].getElementsByTagName("td")[5];
             xNum = isNaN(x.innerText) ? 100 : Number(x.innerText);
             yNum = isNaN(y.innerText) ? 100 : Number(y.innerText);
-
-            console.log(xNum);
-            console.log(yNum);
             if (xNum > yNum) {
                 shouldSwitch = true;
                 break;
             }
         }
         if (shouldSwitch) {
-
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            console.log("i was here")
             switching = true;
         }
     }
