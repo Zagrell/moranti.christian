@@ -19,6 +19,12 @@ public class Cars {
         return carRepository.findAll();
     }
 
+    @GetMapping("/cars/normal")
+    public List<Car> getNormalCars(){
+        return carRepository.findAllByTypeContaining("normal");
+    }
+
+
     @GetMapping("/cars/{carNumber}")
     public Car getCarById(@PathVariable Long carNumber) {
         return carRepository.findById(carNumber).get();

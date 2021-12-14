@@ -2,6 +2,7 @@ package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Case;
 import gruppe1.moranti.models.Shift;
+import gruppe1.moranti.repositories.CarRepository;
 import gruppe1.moranti.repositories.CaseRepository;
 import gruppe1.moranti.repositories.EmployeeRepository;
 import gruppe1.moranti.repositories.ShiftRepository;
@@ -23,6 +24,9 @@ public class Shifts {
     @Autowired
     CaseRepository caseRepository;
 
+    @Autowired
+    CarRepository carRepository;
+
     @GetMapping("/shifts")
     public List<Shift> getShifts() {
         return shiftRepository.findAll();
@@ -34,8 +38,19 @@ public class Shifts {
     }
 
     @PostMapping("/shifts")
-    public Shift addShift(@RequestBody Shift newShift) {
-        newShift.setId(null);
+    public Shift addShift() {
+        Shift newShift = new Shift();
+        int highestPrio = 0;
+        List<Shift> shifts = shiftRepository.findAll();
+
+        for(Shift foundShift : shifts){
+            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()){
+                highestPrio = foundShift.getPriority();
+            }
+        }
+
+        newShift.setPriority(highestPrio+1);
+
         return shiftRepository.save(newShift);
     }
 
@@ -51,7 +66,6 @@ public class Shifts {
         List<Shift> shifts = shiftRepository.findAll();
         shifts.forEach(shift -> {
             if (100 >= shift.getPriority() && shift.getPriority() > shiftToUpdate.getPriority()) {
-                System.out.println(shift.getPriority());
                 shift.setPriority(shift.getPriority() - 1);
             }
         });
@@ -61,6 +75,14 @@ public class Shifts {
 
 
         shiftToUpdate.setShiftCase(newCase);
+        return shiftRepository.save(shiftToUpdate);
+    }
+
+    @PatchMapping("/shifts/carchange/{id}")
+    public Shift updateCarShift(@PathVariable Long id, @RequestBody Long carNumber) {
+        Shift shiftToUpdate = shiftRepository.findById(id).get();
+        shiftToUpdate.setCar(carRepository.findById(carNumber).get());
+
         return shiftRepository.save(shiftToUpdate);
     }
 
@@ -111,6 +133,16 @@ public class Shifts {
 
     @DeleteMapping("/shifts/{id}")
     public void deleteShiftById(@PathVariable Long id) {
+        Shift shiftToDelete = shiftRepository.findById(id).get();
+
+        List<Shift> shifts = shiftRepository.findAll();
+        shifts.forEach(shift -> {
+            if (100 >= shift.getPriority() && shift.getPriority() > shiftToDelete.getPriority()) {
+                shift.setPriority(shift.getPriority() - 1);
+            }
+        });
+        shiftRepository.saveAll(shifts);
+
         shiftRepository.deleteById(id);
     }
 
