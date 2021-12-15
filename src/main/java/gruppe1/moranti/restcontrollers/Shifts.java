@@ -57,7 +57,6 @@ public class Shifts {
     @PostMapping("shifts/addnewcase/{id}")
     public Shift addNewCase(@PathVariable Long id, @RequestBody Case newCase) {
         if (!caseRepository.existsById(newCase.getCaseNumber())) {
-            System.out.println(newCase.getCaseType().getId());
             if (caseTypeRepository.existsById(newCase.getCaseType().getId()))
                 caseRepository.save(newCase);
         }
