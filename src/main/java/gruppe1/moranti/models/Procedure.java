@@ -14,6 +14,7 @@ public class Procedure {
     @Column
     public Long id;
 
-    @Column(length = 2000)
-    public String procedure;
+    @Lob
+    @Column
+    public String procedureText;
 }

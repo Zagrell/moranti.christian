@@ -26,7 +26,7 @@ public class Procedures {
     @PatchMapping("/procedures/{id}")
     public Procedure updateProcedure(@PathVariable Long id, @RequestBody String procedure) {
         Procedure procedureToUpdate = procedureRepository.findById(id).get();
-        procedureToUpdate.setProcedure(procedure);
+        procedureToUpdate.setProcedureText(procedure);
 
         return procedureRepository.save(procedureToUpdate);
     }

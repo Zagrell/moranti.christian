@@ -1,6 +1,7 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
 const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
+const procedureDiv = document.getElementById("procedure-text-div");
 
 fetchShifts();
 
@@ -145,8 +146,12 @@ function constructShiftTableRow(shiftTableRow, shift) {
                 throw("Kan ikke tilføje bemærkning");
             }
         })
-    })
+    });
 
+    //Procedure
+
+
+    //Slet vagt
     const deleteShiftButton = document.createElement("button");
     deleteShiftButton.innerText = "❌";
 
@@ -165,6 +170,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     actionsTd.appendChild(deleteShiftButton);
 
 
+    //Append alt
     shiftTableRow.appendChild(carNumberTd);
     shiftTableRow.appendChild(shiftTelephoneTd);
     shiftTableRow.appendChild(licencePlateTd);
