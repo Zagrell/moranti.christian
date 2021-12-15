@@ -12,7 +12,7 @@
     box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.5);
 }
 
-#nav-bar .end{
+#nav-bar .end {
     width: 18.75rem;
 }
 
@@ -55,7 +55,7 @@ body {
     background-color: lightgrey;
 }
 
-.center{
+.center {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -66,7 +66,7 @@ a {
     text-decoration: none;
 }
 
-button:hover{
+button:hover {
     cursor: pointer;
 }
 
@@ -78,25 +78,25 @@ button:hover{
 }
 
 .close:hover,
-.close:focus{
+.close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-h2, h3{
-    margin:0.5rem 0 0 0;
+h2, h3 {
+    margin: 0.5rem 0 0 0;
     padding-top: 1rem;
 }
 
 
-.table-div{
+.table-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.table-div table{
+.table-div table {
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
@@ -114,7 +114,7 @@ h2, h3{
     text-align: center;
 }
 
-.table-div tr{
+.table-div tr {
     border-bottom: 2px solid gray;
 }
 
@@ -126,11 +126,11 @@ h2, h3{
     padding: 1rem;
 }
 
-table caption{
+table caption {
     text-align: left;
 }
 
-thead{
+thead {
     background-color: darkgray;
 }
 
@@ -149,26 +149,27 @@ input[type=number] {
 
 /*Uge number*/
 #week-number {
-    font-family: "Muli", sans-serif, bolder;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    font-family: "Muli", sans-serif;
     color: white;
-    position: relative;
-    float: right;
+    position: absolute;
+    padding: 25px 0 0 55%;
 }
-.modal{
+
+.modal {
     display: none;
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     overflow: auto;
     z-index: 1;
 
 }
 
-.modal-content{
+.modal-content {
 
     background-color: #fefefe;
     margin: 15% auto;
@@ -179,11 +180,12 @@ input[type=number] {
 
 
 }
-.modal-content h3{
+
+.modal-content h3 {
     margin: 0 0 8px 0;
 }
 
-.modal-content input, .modal-content select{
+.modal-content input, .modal-content select {
     margin-bottom: 8px;
 }
 
