@@ -15,13 +15,13 @@ function fetchShifts() {
         });
 }
 
-fetch(baseURL + "/casetypes")
+fetch(baseURL + "/caseTypes")
     .then(response => response.json())
     .then(result => {
         result.forEach(caseType => {
             const caseTypeOption = document.createElement("option");
             caseTypeOption.innerText = caseType.type;
-            caseTypeOption.value = caseType.type;
+            caseTypeOption.value = caseType.id;
             document.getElementById("new-case-type").appendChild(caseTypeOption);
         })
     });
@@ -131,7 +131,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         submitCaseButton.addEventListener("click", () => {
             const caseToCreate = {
                 caseNumber: document.getElementById("new-case-number").value,
-                caseType: document.getElementById("new-case-type").value,
+                caseType: {id : document.getElementById("new-case-type").value},
                 area: document.getElementById("new-case-area").value
             }
             fetch(baseURL + "/shifts/addnewcase/" + shift.id, {

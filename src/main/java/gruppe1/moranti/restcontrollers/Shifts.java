@@ -2,10 +2,7 @@ package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Case;
 import gruppe1.moranti.models.Shift;
-import gruppe1.moranti.repositories.CarRepository;
-import gruppe1.moranti.repositories.CaseRepository;
-import gruppe1.moranti.repositories.EmployeeRepository;
-import gruppe1.moranti.repositories.ShiftRepository;
+import gruppe1.moranti.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +14,9 @@ public class Shifts {
 
     @Autowired
     ShiftRepository shiftRepository;
+
+    @Autowired
+    CaseTypeRepository caseTypeRepository;
 
     @Autowired
     EmployeeRepository employeeRepository;
@@ -43,13 +43,13 @@ public class Shifts {
         int highestPrio = 0;
         List<Shift> shifts = shiftRepository.findAll();
 
-        for(Shift foundShift : shifts){
-            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()){
+        for (Shift foundShift : shifts) {
+            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()) {
                 highestPrio = foundShift.getPriority();
             }
         }
 
-        newShift.setPriority(highestPrio+1);
+        newShift.setPriority(highestPrio + 1);
 
         return shiftRepository.save(newShift);
     }
@@ -57,7 +57,9 @@ public class Shifts {
     @PostMapping("shifts/addnewcase/{id}")
     public Shift addNewCase(@PathVariable Long id, @RequestBody Case newCase) {
         if (!caseRepository.existsById(newCase.getCaseNumber())) {
-            caseRepository.save(newCase);
+            System.out.println(newCase.getCaseType().getId());
+            if (caseTypeRepository.existsById(newCase.getCaseType().getId()))
+                caseRepository.save(newCase);
         }
 
         Shift shiftToUpdate = shiftRepository.findById(id).get();
@@ -103,7 +105,7 @@ public class Shifts {
     }
 
     @PatchMapping("shifts/removecase/{id}")
-    public Shift removeCase(@PathVariable Long id){
+    public Shift removeCase(@PathVariable Long id) {
         Shift shift = shiftRepository.findById(id).get();
         Case shiftCase = shift.getShiftCase();
         shift.setShiftCase(null);
@@ -111,17 +113,17 @@ public class Shifts {
         int highestPrio = 0;
         List<Shift> shifts = shiftRepository.findAll();
 
-        for(Shift foundShift : shifts){
-            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()){
+        for (Shift foundShift : shifts) {
+            if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()) {
                 highestPrio = foundShift.getPriority();
             }
         }
-        shift.setPriority(highestPrio+1);
+        shift.setPriority(highestPrio + 1);
 
         shiftRepository.save(shift);
         try {
             caseRepository.delete(shiftCase);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return shift;

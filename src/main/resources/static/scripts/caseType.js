@@ -40,7 +40,7 @@ function constructCaseTypeTableRow(tableRow, caseType) {
     updateCaseTypeButton.addEventListener("click", () => {
         const caseTypeInput = document.createElement("input");
 
-        caseTypeInput.type = caseTypeTd.innerText;
+        caseTypeInput.value = caseTypeTd.innerText;
         caseTypeTd.innerText = "";
 
         caseTypeTd.appendChild(caseTypeInput);
@@ -101,10 +101,13 @@ function createCaseType() {
         if (response.status === 200) {
             newCaseTypeModal.style.display = "none";
             document.getElementById("new-casetype").value = "";
-            createCaseTypeTableRow(caseTypeToCreate);
+            return response.json()
         } else {
             console.log("Error med at oprette en sagstype")
         }
+    }).then(result => {
+        caseTypeToCreate.id = result.id;
+        createCaseTypeTableRow(caseTypeToCreate);
     });
 }
 

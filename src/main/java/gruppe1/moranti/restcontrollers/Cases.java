@@ -46,7 +46,7 @@ public class Cases {
             if (caseToUpdateWith.getCaseType() != null) foundCase.setCaseType(caseToUpdateWith.getCaseType());
 
             caseRepository.save(foundCase);
-            return "Case wam updated";
+            return "Case was updated";
         }).orElse("Case was not found");
     }
 
