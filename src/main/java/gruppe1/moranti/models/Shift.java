@@ -22,7 +22,7 @@ public class Shift {
     private int priority;
 
     @Column
-    private String comment;
+    private String comment = "";
 
     @OneToOne
     private Car car;

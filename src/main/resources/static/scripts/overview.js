@@ -26,6 +26,31 @@ fetch(baseURL + "/cases/casetypes")
         })
     });
 
+//Procedure
+fetch(baseURL + "/procedure")
+    .then(response => response.json())
+    .then(result => {
+        createProcedure(result)
+    });
+
+procedureDiv.addEventListener("focusout", () => {
+    fetch(baseURL + "/procedure", {
+        method: "PUT",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: procedureDiv.innerText
+    }).then(response => {
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw("Kan ikke tilføje procedure");
+        }
+    })
+})
+
+function createProcedure (procedure) {
+    procedureDiv.innerText = procedure.procedureText;
+}
+
 function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
 
@@ -132,7 +157,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
     //Bemærkninger
     commentTd.innerHTML = `
-        <div id="comment-div-${shift.id}" contenteditable="true" data-text="Klik her">${shift.comment}</div>
+        <div id="comment-div-${shift.id}" contenteditable="true">${shift.comment}</div>
     `;
     commentTd.addEventListener("focusout", () => {
         fetch(baseURL + "/shifts/comment/" + shift.id, {
@@ -147,9 +172,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
             }
         })
     });
-
-    //Procedure
-
 
     //Slet vagt
     const deleteShiftButton = document.createElement("button");
@@ -168,7 +190,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
         }
     });
     actionsTd.appendChild(deleteShiftButton);
-
 
     //Append alt
     shiftTableRow.appendChild(carNumberTd);
@@ -326,8 +347,6 @@ document.getElementById("add-shift-button").addEventListener("click", () => {
         if (response.status === 200)
             fetchShifts();
     })
-
-
 })
 
 
