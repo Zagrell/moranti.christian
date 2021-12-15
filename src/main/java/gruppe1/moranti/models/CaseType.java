@@ -1,8 +1,8 @@
 package gruppe1.moranti.models;
 
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 
 @Data
@@ -10,6 +10,11 @@ import javax.persistence.Id;
 public class CaseType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @Column
     private String type;
 
     public CaseType(String type) {

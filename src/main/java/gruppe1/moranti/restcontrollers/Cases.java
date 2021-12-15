@@ -1,9 +1,7 @@
 package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Case;
-import gruppe1.moranti.models.CaseType;
 import gruppe1.moranti.repositories.CaseRepository;
-import gruppe1.moranti.repositories.CaseTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +13,6 @@ public class Cases {
     @Autowired
     CaseRepository caseRepository;
 
-    @Autowired
-    CaseTypeRepository caseTypeRepository;
-
     @GetMapping("/cases")
     public List<Case> getCases() {
         return caseRepository.findAll();
@@ -26,11 +21,6 @@ public class Cases {
     @GetMapping("/cases/{caseNumber}")
     public Case getCaseById(@PathVariable Long caseNumber) {
         return caseRepository.findById(caseNumber).get();
-    }
-
-    @GetMapping("/cases/casetypes")
-    public List<CaseType> getCaseTypes () {
-        return caseTypeRepository.findAll();
     }
 
     @PostMapping("/cases")

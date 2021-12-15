@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../stylesheets/global.css">
+    <link rel="stylesheet" href="../stylesheets/casetype.css">
+    <meta charset="UTF-8">
+    <title>Sagstype</title>
+</head>
+<body>
+<nav id="nav-bar"></nav>
+
+<div class="table-div" class="table">
+
+<table id="casetype-table">
+    <caption><h2>Sagstyper</h2></caption>
+    <thead>
+    <tr>
+        <th>CaseType</th>
+        <th class="hover-th" id="new-casetype-button">+ Ny sagstype</th>
+    </tr>
+    </thead>
+<tbody id="casetype-tbody"></tbody>
+    </table>
+</div>
+
+<div id="new-casetype-modal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <h3>Opret ny sagstype</h3>
+        <label for="new-casetype">Sagstype navn</label><input type="text" id="new-casetype">
+
+        <button id="new-casetype-submit">Opret Sagstype</button>
+    </div>
+</div>
+<script src="../scripts/global.js"></script>
+<script src="../scripts/caseType.js"></script>
+
+</body>
+</html>

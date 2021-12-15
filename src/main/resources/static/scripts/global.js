@@ -5,6 +5,7 @@ const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML = `
 
+
 <div class="middle">
     <a href="../html/overview.html">
         <p><b>Overblik</b></p>
@@ -15,7 +16,9 @@ navBar.innerHTML = `
     <a href="../html/employees.html">
         <p><b>Ansatte</b></p>
     </a>
-    <div id="week-number"></div>
+    <a href="../html/caseType.html">
+        <p><b>Sagstyper</b></p>
+        </a>
 </div>
 
 `;
