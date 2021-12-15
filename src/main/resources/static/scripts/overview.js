@@ -53,7 +53,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
     carNumberTd.appendChild(carSelect);
 
 
-
     //Valg af sanitører
     const handymanSelect = document.createElement("select");
     pickHandyman(shift, workTelephoneTd, handymanSelect);
@@ -64,19 +63,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
         case 101:
             priorityTd.innerText = "Ude";
             shiftTableRow.style.backgroundColor = "#8c1f1f";
-            /*
-            carNumberTd.style.backgroundColor = "#8c1f1f";
-            shiftTelephoneTd.style.backgroundColor = "#8c1f1f";
-            licencePlateTd.style.backgroundColor = "#8c1f1f";
-            employeeTd.style.backgroundColor = "#8c1f1f";
-            workTelephoneTd.style.backgroundColor = "#8c1f1f";
-            priorityTd.style.backgroundColor = "#8c1f1f";
-            caseNumberTd.style.backgroundColor = "#8c1f1f";
-            typeTd.style.backgroundColor = "#8c1f1f";
-            areaTd.style.backgroundColor = "#8c1f1f";
-            commentTd.style.backgroundColor = "#8c1f1f";
-            actionsTd.style.backgroundColor = "#8c1f1f";
-            */
             break;
         case 102:
             priorityTd.innerText = "Kører ikke";
@@ -145,11 +131,21 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
     //Bemærkninger
     commentTd.innerHTML = `
-        <div id="comment-div-${shift.id}" contenteditable="true">${shift.comment}</div>
+        <div id="comment-div-${shift.id}" contenteditable="true" data-text="Klik her">${shift.comment}</div>
     `;
-
-    }
-    commentTd.innerText = shift.comment;
+    commentTd.addEventListener("focusout", () => {
+        fetch(baseURL + "/shifts/comment/" + shift.id, {
+            method: "PATCH",
+            headers: {"Content-type": "application/json; charset=UTF-8"},
+            body: document.getElementById("comment-div-" + shift.id).innerText
+        }).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw("Kan ikke tilføje bemærkning");
+            }
+        })
+    })
 
     const deleteShiftButton = document.createElement("button");
     deleteShiftButton.innerText = "❌";
@@ -168,19 +164,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
     });
     actionsTd.appendChild(deleteShiftButton);
 
-    commentTd.addEventListener("focusout", () => {
-        fetch(baseURL + "/shifts/comment/" + shift.id, {
-            method: "PATCH",
-            headers: {"Content-type": "application/json; charset=UTF-8"},
-            body: document.getElementById("comment-div-" + shift.id).innerText
-        }).then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw("Kan ikke tilføje bemærkning");
-            }
-        })
-    })
 
     shiftTableRow.appendChild(carNumberTd);
     shiftTableRow.appendChild(shiftTelephoneTd);
@@ -230,7 +213,7 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                 })
                     .then(response => {
                         if (response.status === 200) {
-                            if (defaultOption != null){
+                            if (defaultOption != null) {
                                 console.log("hej med dig ")
                                 carSelect.remove(defaultOption);
                                 defaultOption = null;
