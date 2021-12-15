@@ -147,4 +147,12 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+/*Uge number*/
+#week-number {
+    font-family: "Muli", sans-serif, bolder;
+    font-size: 1rem;
+    color: white;
+    position: relative;
+    float: right;
+}
 
