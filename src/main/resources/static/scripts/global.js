@@ -18,7 +18,8 @@ navBar.innerHTML = `
     </a>
     <a href="../html/caseType.html">
         <p><b>Sagstyper</b></p>
-        </a>
+    </a>
+    <div id="week-number"></div>
 </div>
 
 `;
