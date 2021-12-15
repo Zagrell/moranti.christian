@@ -54,6 +54,13 @@
 }
 
 #procedure-text-div {
-    width: 200px;
-    height: 200px;
+    font-family: "Muli", sans-serif, bolder;
+    border: black solid 1px;
+    font-size: 15pt;
+    color: #c72929;
+    cursor: text;
+    margin: auto;
+    background-color: #c2c0c0;
+    width: 1182px;
+    height: 75px;
 }
