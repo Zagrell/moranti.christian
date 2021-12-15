@@ -16,6 +16,9 @@ navBar.innerHTML=`
     <a href="../html/employees.html">
         <p><b>Ansatte</b></p>
     </a>
+    <a href="../html/caseType.html">
+        <p><b>Sagstyper</b></p>
+        </a>
 </div>
 
 `;

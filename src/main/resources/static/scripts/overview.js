@@ -15,7 +15,7 @@ function fetchShifts() {
         });
 }
 
-fetch(baseURL + "/cases/casetypes")
+fetch(baseURL + "/casetypes")
     .then(response => response.json())
     .then(result => {
         result.forEach(caseType => {

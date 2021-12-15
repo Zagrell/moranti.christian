@@ -1,0 +1,12 @@
+a {
+    text-decoration: none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.hover-th:hover{
+    cursor: pointer;
+    background-color: #606060;
+}
