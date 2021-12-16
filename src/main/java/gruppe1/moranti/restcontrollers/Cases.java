@@ -1,6 +1,7 @@
 package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Case;
+import gruppe1.moranti.models.WaitingList;
 import gruppe1.moranti.repositories.CaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,9 @@ public class Cases {
     @PutMapping("/cases/{caseNumber}")
     public String updateCaseByCaseNumber(@PathVariable Long caseNumber, @RequestBody Case caseToUpdateWith) {
         if (caseRepository.existsById(caseNumber)) {
-            caseToUpdateWith.setCaseNumber(caseNumber);
+            if(!caseToUpdateWith.getCaseNumber().equals(caseNumber)) {
+                caseRepository.deleteById(caseNumber);
+            }
             caseRepository.save(caseToUpdateWith);
             return "Case was created";
         } else {

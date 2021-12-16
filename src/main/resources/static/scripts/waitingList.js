@@ -1,6 +1,7 @@
 const waitingListTbody = document.getElementById("waitingList-tbody");
-const waitingListModal = document.getElementById("new-waiting-case-modal");
-const waitingListSubmit = document.getElementById("new-waiting-case-submit");
+const newWaitingListModal = document.getElementById("new-waiting-case-modal");
+const newWaitingListSubmit = document.getElementById("new-waiting-case-submit");
+let caseTypes;
 
 fetch(baseURL + "/waitinglist")
     .then(response => response.json())
@@ -8,7 +9,19 @@ fetch(baseURL + "/waitinglist")
         waitingList.cases.map(createWaitingListTableRow);
     });
 
-function createWaintingListTableRow(waitingList) {
+fetch(baseURL + "/caseTypes")
+    .then(response => response.json())
+    .then(result => {
+        caseTypes = result;
+        result.forEach(caseType => {
+            const caseTypeOption = document.createElement("option");
+            caseTypeOption.innerText = caseType.type;
+            caseTypeOption.value = caseType.id;
+            document.getElementById("new-waiting-case-type").appendChild(caseTypeOption);
+        })
+    });
+
+function createWaitingListTableRow(waitingList) {
     const tableRow = document.createElement("tr");
     waitingListTbody.appendChild(tableRow);
 
@@ -32,7 +45,7 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
     actionTd.appendChild(deleteCaseButton);
 
     caseNumberTd.innerText = waitingCase.caseNumber;
-    caseTypeTd.innerText = waitingCase.caseType;
+    caseTypeTd.innerText = waitingCase.caseType.type;
     caseAreaTd.innerText = waitingCase.area;
 
     updateCaseButton.innerText = "Rediger";
@@ -42,14 +55,21 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
 
     updateCaseButton.addEventListener("click", () => {
         const caseNumberInput = document.createElement("input");
-        const caseTypeInput = document.createElement("input");
+        const caseTypeInput = document.createElement("select");
         const caseAreaInput = document.createElement("input");
 
         caseNumberInput.type = "number";
         caseNumberInput.value = Number(caseNumberTd.innerText);
         caseNumberTd.innerText = "";
 
-        caseTypeInput.value = caseTypeTd.innerText;
+        caseTypes.forEach(caseType => {
+            const caseTypeOption = document.createElement("option");
+            caseTypeOption.innerText = caseType.type;
+            caseTypeOption.value = caseType.id;
+            if (caseTypeOption.value == waitingCase.caseType.id)
+                caseTypeOption.selected = true;
+            caseTypeInput.appendChild(caseTypeOption);
+        })
         caseTypeTd.innerText = "";
 
         caseAreaInput.type = "number";
@@ -68,22 +88,20 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
 
         const caseToUpdate = {
             caseNumber: Number(caseNumberTd.firstChild.value),
-            caseType: caseTypeTd.firstChild.value,
+            caseType: {id: caseTypeTd.firstChild.value},
             area: caseAreaTd.firstChild.value
         };
 
-        fetch(baseURL + "/cases/" + waitingCase.caseNumber, {
+        fetch(baseURL + "/waitinglist/updatecase/" + waitingCase.caseNumber, {
             method: "PUT",
             headers: {"Content-type": "application/json; charset=UTF-8"},
             body: JSON.stringify(caseToUpdate)
         }).then(response => {
             if (response.status === 200) {
-                caseNumberTd.innerHTML = "";
-                caseTypeTd.innerHTML = "";
-                caseAreaTd.innerHTML = "";
+
 
                 caseNumberTd.innerHTML = caseToUpdate.caseNumber.toString();
-                caseTypeTd.innerHTML = caseToUpdate.caseType.toString();
+                caseTypeTd.innerHTML = caseTypeTd.firstChild.options[caseTypeTd.firstChild.selectedIndex].text;
                 caseAreaTd.innerHTML = caseToUpdate.area.toString();
 
                 updateCaseButton.style.display = "";
@@ -95,7 +113,7 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
     });
 
     deleteCaseButton.addEventListener("click", () => {
-        fetch(baseURL + "/cases/" + waitingCase.caseNumber, {
+        fetch(baseURL + "/waitinglist/removecase/" + waitingCase.caseNumber, {
             method: "DELETE"
         }).then(response => {
             if (response.status === 200) {
@@ -113,14 +131,46 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
 }
 
 function createCase() {
-    const carToCreate = {
+    const caseTypeSelect = document.getElementById("new-waiting-case-type");
+    const caseToCreate = {
         caseNumber: Number(document.getElementById("new-waiting-case-number").value),
-        caseType: document.getElementById("new-waiting-case-type").value,
-        area: document.getElementById("new-waiting-case-area")
+        caseType: {
+            id: caseTypeSelect.value,
+        },
+        area: document.getElementById("new-waiting-case-area").value
     }
 
     fetch(baseURL + "/waitinglist/addcase", {
-
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: JSON.stringify(caseToCreate)
+    }).then(response => {
+        if (response.status === 200) {
+            newWaitingListModal.style.display = "none";
+            document.getElementById("new-waiting-case-number").value = "";
+            document.getElementById("new-waiting-case-type").value = "";
+            document.getElementById("new-waiting-case-area").value = "";
+            return response.json();
+        } else {
+            throw "Error med at oprette en case";
+        }
+    }).then(caseCreated => {
+        createWaitingListTableRow(caseCreated);
     })
 }
 
+newWaitingListSubmit.addEventListener("click", () => createCase());
+
+document.getElementById("new-waiting-case-button").onclick = function () {
+    newWaitingListModal.style.display = "block";
+}
+
+window.onclick = function (event) {
+    if (event.target === newWaitingListModal) {
+        newWaitingListModal.style.display = "none";
+    }
+}
+
+document.getElementsByClassName("close")[0].onclick = function () {
+    newWaitingListModal.style.display = "none";
+}
