@@ -7,6 +7,10 @@ const foalTable = document.getElementById("foal-table");
 const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
 const procedureDiv = document.getElementById("procedure-text-div");
+const normal = "normal";
+const graffiti = "graffiti";
+const fol = "fol";
+const sanitorEndPoint = "sanitor";
 
 fetchShifts();
 
@@ -16,9 +20,11 @@ function fetchShifts() {
         .then(result => {
             shiftsTableBody.innerHTML = "";
             graffitiTableBody.innerHTML = "";
+            foalTableBody.innerHTML = "";
             result.forEach(createShiftTableRow)
             sortTable(shiftTable)
             sortTable(graffitiTable)
+            sortTable(foalTable)
         });
 }
 
@@ -62,18 +68,21 @@ function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
 
     switch (shift.shiftType.toLowerCase()) {
-        case "normal":
+        case normal:
             shiftsTableBody.appendChild(shiftTableRow);
             constructShiftTableRow(shiftTableRow, shift);
             break;
-        case "graffiti":
+        case graffiti:
             graffitiTableBody.appendChild(shiftTableRow);
+            constructShiftTableRow(shiftTableRow, shift);
+            break;
+        case fol:
+            foalTableBody.appendChild(shiftTableRow);
             constructShiftTableRow(shiftTableRow, shift);
             break;
         default:
             throw("Kan ikke oprette tablerow");
     }
-
 }
 
 function constructShiftTableRow(shiftTableRow, shift) {
@@ -99,7 +108,11 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
     //Valg af sanitører
     const handymanSelect = document.createElement("select");
-    pickHandyman(shift, workTelephoneTd, handymanSelect);
+    if (shift.shiftType == fol) {
+        pickHandyman(shift, workTelephoneTd, handymanSelect, fol);
+    } else {
+        pickHandyman(shift, workTelephoneTd, handymanSelect, sanitorEndPoint);
+    }
     employeeTd.appendChild(handymanSelect);
 
     //Prioriteter
@@ -210,9 +223,11 @@ function constructShiftTableRow(shiftTableRow, shift) {
     actionsTd.appendChild(deleteShiftButton);
 
     //Append alt
-    shiftTableRow.appendChild(carNumberTd);
-    shiftTableRow.appendChild(shiftTelephoneTd);
-    shiftTableRow.appendChild(licencePlateTd);
+    if (shift.shiftType.toLowerCase() == normal || shift.shiftType.toLowerCase() == graffiti) {
+        shiftTableRow.appendChild(carNumberTd);
+        shiftTableRow.appendChild(shiftTelephoneTd);
+        shiftTableRow.appendChild(licencePlateTd);
+    }
     shiftTableRow.appendChild(employeeTd);
     shiftTableRow.appendChild(workTelephoneTd);
     shiftTableRow.appendChild(priorityTd);
@@ -221,6 +236,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
     shiftTableRow.appendChild(areaTd);
     shiftTableRow.appendChild(commentTd);
     shiftTableRow.appendChild(actionsTd);
+
 }
 
 function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
@@ -235,9 +251,7 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                 defaultOption.innerText = "Vælg en bil";
                 carSelect.appendChild(defaultOption);
             }
-            console.log(result);
             result = result.filter(car => car.type.toLowerCase() == shift.shiftType.toLowerCase())
-            console.log(result);
             result.forEach(car => {
                 const carOption = document.createElement("option");
                 carOption.innerText = car.carNumber;
@@ -278,9 +292,9 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
         });
 }
 
-function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
+function pickHandyman(shift, workPhoneNumberTd, handymanSelect, endPoint) {
 
-    fetch(baseURL + "/employees/handymen")
+    fetch(baseURL + "/employees/" + endPoint)
         .then(response => response.json())
         .then(result => {
             let defaultOption;
@@ -288,7 +302,7 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
                 defaultOption = document.createElement("option");
                 defaultOption.defaultSelected = "true";
                 defaultOption.disabled = "true";
-                defaultOption.innerText = "Vælg en sanitør";
+                defaultOption.innerText = "Vælg en vagt";
                 handymanSelect.appendChild(defaultOption);
             }
             result.forEach(handyman => {
@@ -365,7 +379,7 @@ document.getElementById("add-shift-button").addEventListener("click", () => {
     fetch(baseURL + "/shifts", {
         method: "POST",
         headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: "normal"
+        body: normal
     }).then(response => {
         if (response.status === 200)
             fetchShifts();
@@ -376,7 +390,7 @@ document.getElementById("add-graffiti-button").addEventListener("click", () => {
     fetch(baseURL + "/shifts", {
         method: "POST",
         headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: "graffiti"
+        body: graffiti
     }).then(response => {
         if (response.status === 200) {
             fetchShifts();
@@ -384,16 +398,14 @@ document.getElementById("add-graffiti-button").addEventListener("click", () => {
     })
 })
 
-/*
 document.getElementById("add-intern-button").addEventListener("click", () => {
     fetch(baseURL + "/shifts", {
         method: "POST",
         headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: "fol"
+        body: fol
     }).then(response => {
         if (response.status === 200) {
             fetchShifts();
         }
     })
 })
- */
