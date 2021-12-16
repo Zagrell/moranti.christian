@@ -38,10 +38,11 @@ public class Shifts {
     }
 
     @PostMapping("/shifts")
-    public Shift addShift() {
+    public Shift addShift(@RequestBody String shiftType) {
         Shift newShift = new Shift();
+        newShift.setShiftType(shiftType);
         int highestPrio = 0;
-        List<Shift> shifts = shiftRepository.findAll();
+        List<Shift> shifts = shiftRepository.findAllByShiftType(shiftType);
 
         for (Shift foundShift : shifts) {
             if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()) {
@@ -64,7 +65,7 @@ public class Shifts {
         Shift shiftToUpdate = shiftRepository.findById(id).get();
 
         //update all prioities
-        List<Shift> shifts = shiftRepository.findAll();
+        List<Shift> shifts = shiftRepository.findAllByShiftType(shiftToUpdate.getShiftType());
         shifts.forEach(shift -> {
             if (100 >= shift.getPriority() && shift.getPriority() > shiftToUpdate.getPriority()) {
                 shift.setPriority(shift.getPriority() - 1);
@@ -110,7 +111,7 @@ public class Shifts {
         shift.setShiftCase(null);
 
         int highestPrio = 0;
-        List<Shift> shifts = shiftRepository.findAll();
+        List<Shift> shifts = shiftRepository.findAllByShiftType(shift.getShiftType());
 
         for (Shift foundShift : shifts) {
             if (foundShift.getPriority() <= 100 && highestPrio < foundShift.getPriority()) {
@@ -144,7 +145,7 @@ public class Shifts {
     public void deleteShiftById(@PathVariable Long id) {
         Shift shiftToDelete = shiftRepository.findById(id).get();
 
-        List<Shift> shifts = shiftRepository.findAll();
+        List<Shift> shifts = shiftRepository.findAllByShiftType(shiftToDelete.getShiftType());
         shifts.forEach(shift -> {
             if (100 >= shift.getPriority() && shift.getPriority() > shiftToDelete.getPriority()) {
                 shift.setPriority(shift.getPriority() - 1);

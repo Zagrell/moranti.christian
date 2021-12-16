@@ -1,4 +1,9 @@
 const shiftsTableBody = document.getElementById("shift-tbody");
+const graffitiTableBody = document.getElementById("graffiti-tbody");
+const foalTableBody = document.getElementById("foal-tbody");
+const shiftTable = document.getElementById("shift-table");
+const graffitiTable = document.getElementById("graffiti-table");
+const foalTable = document.getElementById("foal-table");
 const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
 const procedureDiv = document.getElementById("procedure-text-div");
@@ -10,8 +15,10 @@ function fetchShifts() {
         .then(response => response.json())
         .then(result => {
             shiftsTableBody.innerHTML = "";
-            result.map(createShiftTableRow)
-            sortTable();
+            graffitiTableBody.innerHTML = "";
+            result.forEach(createShiftTableRow)
+            sortTable(shiftTable)
+            sortTable(graffitiTable)
         });
 }
 
@@ -47,15 +54,26 @@ procedureDiv.addEventListener("focusout", () => {
     })
 })
 
-function createProcedure (procedure) {
+function createProcedure(procedure) {
     procedureDiv.innerText = procedure.procedureText;
 }
 
 function createShiftTableRow(shift) {
     const shiftTableRow = document.createElement("tr");
 
-    shiftsTableBody.appendChild(shiftTableRow);
-    constructShiftTableRow(shiftTableRow, shift);
+    switch (shift.shiftType.toLowerCase()) {
+        case "normal":
+            shiftsTableBody.appendChild(shiftTableRow);
+            constructShiftTableRow(shiftTableRow, shift);
+            break;
+        case "graffiti":
+            graffitiTableBody.appendChild(shiftTableRow);
+            constructShiftTableRow(shiftTableRow, shift);
+            break;
+        default:
+            throw("Kan ikke oprette tablerow");
+    }
+
 }
 
 function constructShiftTableRow(shiftTableRow, shift) {
@@ -131,7 +149,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         submitCaseButton.addEventListener("click", () => {
             const caseToCreate = {
                 caseNumber: document.getElementById("new-case-number").value,
-                caseType: {id : document.getElementById("new-case-type").value},
+                caseType: {id: document.getElementById("new-case-type").value},
                 area: document.getElementById("new-case-area").value
             }
             fetch(baseURL + "/shifts/addnewcase/" + shift.id, {
@@ -206,7 +224,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
 }
 
 function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
-    fetch(baseURL + "/cars/normal")
+    fetch(baseURL + "/cars")
         .then(response => response.json())
         .then(result => {
             let defaultOption;
@@ -214,9 +232,12 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                 defaultOption = document.createElement("option");
                 defaultOption.defaultSelected = "true";
                 defaultOption.disabled = "true";
-                defaultOption.innerText = "vælg en bil";
+                defaultOption.innerText = "Vælg en bil";
                 carSelect.appendChild(defaultOption);
             }
+            console.log(result);
+            result = result.filter(car => car.type.toLowerCase() == shift.shiftType.toLowerCase())
+            console.log(result);
             result.forEach(car => {
                 const carOption = document.createElement("option");
                 carOption.innerText = car.carNumber;
@@ -267,7 +288,7 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect) {
                 defaultOption = document.createElement("option");
                 defaultOption.defaultSelected = "true";
                 defaultOption.disabled = "true";
-                defaultOption.innerText = "vælg en sanitør";
+                defaultOption.innerText = "Vælg en sanitør";
                 handymanSelect.appendChild(defaultOption);
             }
             result.forEach(handyman => {
@@ -314,10 +335,10 @@ document.getElementsByClassName("close")[0].onclick = function () {
 }
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
-function sortTable() {
+function sortTable(tableToSort) {
 
     let table, rows, switching, i, x, y, shouldSwitch, xNum, yNum;
-    table = document.getElementById("shift-table");
+    table = tableToSort;
     switching = true;
     while (switching) {
         switching = false;
@@ -342,13 +363,37 @@ function sortTable() {
 
 document.getElementById("add-shift-button").addEventListener("click", () => {
     fetch(baseURL + "/shifts", {
-        method: "POST"
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: "normal"
     }).then(response => {
         if (response.status === 200)
             fetchShifts();
     })
 })
 
+document.getElementById("add-graffiti-button").addEventListener("click", () => {
+    fetch(baseURL + "/shifts", {
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: "graffiti"
+    }).then(response => {
+        if (response.status === 200) {
+            fetchShifts();
+        }
+    })
+})
 
-
-
+/*
+document.getElementById("add-intern-button").addEventListener("click", () => {
+    fetch(baseURL + "/shifts", {
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: "fol"
+    }).then(response => {
+        if (response.status === 200) {
+            fetchShifts();
+        }
+    })
+})
+ */

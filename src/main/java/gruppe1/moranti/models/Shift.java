@@ -33,4 +33,7 @@ public class Shift {
     @OneToOne
     private Case shiftCase;
 
+    @Column
+    private String shiftType;
+
 }
