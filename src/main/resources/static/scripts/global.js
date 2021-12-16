@@ -10,6 +10,9 @@ navBar.innerHTML = `
     <a href="../html/overview.html">
         <p><b>Overblik</b></p>
     </a>
+    <a href="../html/waitinglist.html">
+        <p><b>Venteliste</b></p>
+    </a>
     <a href="../html/cars.html">
         <p><b>Biler</b></p>
     </a>

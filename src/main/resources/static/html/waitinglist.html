@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../stylesheets/global.css">
+    <link rel="stylesheet" href="../stylesheets/waitinglist.css">
+    <meta charset="UTF-8">
+    <title>Venteliste</title>
+</head>
+<body>
+<nav id="nav-bar"></nav>
+
+<div class="table-div">
+    <table>
+        <caption><h2>Venteliste</h2></caption>
+        <thead>
+        <tr>
+            <th>Sagsnummer</th>
+            <th>Type</th>
+            <th>Område</th>
+            <th class="hover-th" id="new-waiting-case-button">+ Ny Sag</th>
+        </tr>
+        </thead>
+        <tbody id="waitingList-tbody"></tbody>
+    </table>
+</div>
+
+<div id="new-case-modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <h3>Tildel ny sag</h3>
+        <label for="new-case-number">Sagsnummer</label><input type="number" id="new-case-number">
+        <label for="new-case-area">Område</label><input type="text" id="new-case-area">
+        <label for="new-case-type">Type: </label><select name="type" id="new-case-type"></select>
+        <br>
+        <div id="new-case-submit"></div>
+    </div>
+</div>
+
+<script src="../scripts/global.js"></script>
+<script src="../scripts/waitingList.js"></script>
+
+</body>
+</html>
