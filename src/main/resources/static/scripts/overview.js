@@ -44,7 +44,7 @@ procedureDiv.addEventListener("focusout", () => {
     fetch(baseURL + "/procedure", {
         method: "PUT",
         headers: {"Content-type": "application/json; charset=UTF-8"},
-        body: procedureDiv.innerText
+        body: procedureDiv.innerText.replace('undefined', 'Indsæt procedure')
     }).then(response => {
         if (response.status === 200) {
             return response.json();
