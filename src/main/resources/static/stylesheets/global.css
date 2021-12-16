@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Staatliches&display=swap');
+
 /*nav bar */
 #nav-bar {
     background-color: #143c5a;
@@ -149,11 +151,11 @@ input[type=number] {
 
 /*Uge number*/
 #week-number {
-    font-size: 1.3rem;
-    font-family: "Muli", sans-serif;
-    color: white;
+    font-size: 1rem;
+    font-family: 'Krona One', sans-serif;
+    color: lightgrey;
     position: relative;
-    padding-top: 27px;
+    padding-top: 29px;
     transform: translateX(100%);
 }
 
