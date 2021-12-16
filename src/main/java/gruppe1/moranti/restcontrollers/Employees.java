@@ -24,9 +24,14 @@ public class Employees {
         return employeeRepository.findById(id).get();
     }
 
-    @GetMapping("/employees/handymen")
-    public List<Employee> getHandymen() {
+    @GetMapping("/employees/sanitor")
+    public List<Employee> getSanitor() {
         return employeeRepository.findAllByResponsibilityContaining(Responsibility.SANITOR);
+    }
+
+    @GetMapping("/employees/fol")
+    public List<Employee> getFol() {
+        return employeeRepository.findAllByResponsibilityContaining(Responsibility.FOL);
     }
 
     @GetMapping("/employees/shiftleader")
