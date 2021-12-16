@@ -137,14 +137,14 @@ thead {
 }
 
 /*Made with help from https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
-Fjerner fra Crhome, Safari, Edge, Opera*/
+Fjerner pile fra nummerfelter fra Crhome, Safari, Edge, Opera*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/*Fjerne fra Firefox*/
+/*Fjerner pile fra nummerfelter fra Firefox*/
 input[type=number] {
     -moz-appearance: textfield;
 }
@@ -173,15 +173,12 @@ input[type=number] {
 }
 
 .modal-content {
-
     background-color: #fefefe;
     margin: 15% auto;
     width: 13rem;
-    padding: 0px 15px 15px 15px;
+    padding: 0 15px 15px 15px;
     border: 1px solid rgba(128, 128, 128, 0.39);
     border-radius: 10px;
-
-
 }
 
 .modal-content h3 {

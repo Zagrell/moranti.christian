@@ -61,7 +61,7 @@ procedureDiv.addEventListener("focusout", () => {
 })
 
 function createProcedure(procedure) {
-    procedureDiv.innerText = procedure.procedureText;
+        procedureDiv.innerText = procedure.procedureText;
 }
 
 function createShiftTableRow(shift) {

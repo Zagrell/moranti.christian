@@ -38,7 +38,8 @@ function constructCarTableRow(tableRow, car) {
     carNumberTd.innerText = car.carNumber;
     shiftPhoneNumberTd.innerText = car.shiftPhoneNumber;
     licencePlateTd.innerText = car.licencePlate;
-    typeTd.innerText = car.type;
+    typeTd.innerText = car.type.substring(0, 1).toUpperCase() +
+        car.type.substring(1, car.type.length);
 
     //Buttans
     updateCarButton.innerText = "Rediger";
