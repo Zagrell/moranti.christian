@@ -62,5 +62,5 @@
     margin: auto;
     background-color: #c2c0c0;
     width: 1182px;
-    height: 75px;
+    overflow: auto;
 }
