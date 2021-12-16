@@ -152,9 +152,9 @@ input[type=number] {
     font-size: 1.3rem;
     font-family: "Muli", sans-serif;
     color: white;
-    position: absolute;
-    top: 30%;
-    transform: translateX(1500%);
+    position: relative;
+    padding-top: 27px;
+    transform: translateX(100%);
 }
 
 .modal {
