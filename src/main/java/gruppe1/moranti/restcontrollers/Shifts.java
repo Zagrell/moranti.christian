@@ -2,6 +2,7 @@ package gruppe1.moranti.restcontrollers;
 
 import gruppe1.moranti.models.Case;
 import gruppe1.moranti.models.Shift;
+import gruppe1.moranti.models.WaitingList;
 import gruppe1.moranti.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class Shifts {
 
     @Autowired
     CarRepository carRepository;
+
+    @Autowired
+    WaitingListRepository waitingListRepository;
 
     @GetMapping("/shifts")
     public List<Shift> getShifts() {
@@ -58,8 +62,14 @@ public class Shifts {
     @PostMapping("shifts/addnewcase/{id}")
     public Shift addNewCase(@PathVariable Long id, @RequestBody Case newCase) {
         if (!caseRepository.existsById(newCase.getCaseNumber())) {
-            if (caseTypeRepository.existsById(newCase.getCaseType().getId()))
+            if (caseTypeRepository.existsById(newCase.getCaseType().getId())) {
                 caseRepository.save(newCase);
+            }
+        } else if (waitingListRepository.findAll().get(0).getCases().stream().anyMatch(waitingCase -> waitingCase.getCaseNumber().equals(newCase.getCaseNumber()))) {
+            WaitingList waitingList = waitingListRepository.findAll().get(0);
+            waitingList.getCases().removeIf(waitingCase -> waitingCase.getCaseNumber().equals(newCase.getCaseNumber()));
+            System.out.println("hejsa du der");
+            waitingListRepository.save(waitingList);
         }
 
         Shift shiftToUpdate = shiftRepository.findById(id).get();
@@ -79,6 +89,8 @@ public class Shifts {
         shiftToUpdate.setShiftCase(newCase);
         return shiftRepository.save(shiftToUpdate);
     }
+
+
 
     @PatchMapping("/shifts/carchange/{id}")
     public Shift updateCarShift(@PathVariable Long id, @RequestBody Long carNumber) {
