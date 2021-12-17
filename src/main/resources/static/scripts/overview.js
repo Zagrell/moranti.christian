@@ -52,16 +52,16 @@ fetch(baseURL + "/waitinglist")
     });
 
 function waitingListNumber(waitingList) {
-    if (waitingList.cases.length == 0) {
+    if (waitingList.cases.length === 0) {
         document.getElementById("waiting-list-div").innerHTML = `
     <h2>Sager i kø</h2>
     <h1 id="waiting-cases-green">${waitingList.cases.length}</h1>
-    `
+    `;
     } else {
         document.getElementById("waiting-list-div").innerHTML = `
     <h2>Sager i kø</h2>
     <h1 id="waiting-cases-red">${waitingList.cases.length}</h1>
-    `
+    `;
     }
 }
 
@@ -83,7 +83,6 @@ function waitListCaseGeneration() {
                 waitingList = result;
                 waitingListDiv.style.display = "block";
                 waitingListDropdown.innerHTML = "";
-                console.log("hej christian noob bitch");
                 let defaultOption;
                 defaultOption = document.createElement("option");
                 defaultOption.value = "default";
@@ -349,7 +348,6 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                     .then(response => {
                         if (response.status === 200) {
                             if (defaultOption != null) {
-                                console.log("hej med dig ")
                                 carSelect.remove(defaultOption);
                                 defaultOption = null;
                             }
