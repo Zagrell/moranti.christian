@@ -171,12 +171,14 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
     //Definere en bil
     const carSelect = document.createElement("select");
+    carSelect.className = "box minimal";
     pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect);
     carNumberTd.appendChild(carSelect);
 
 
     //Valg af sanitører
     const handymanSelect = document.createElement("select");
+    handymanSelect.className = "box minimal";
     if (shift.shiftType == fol) {
         pickHandyman(shift, workTelephoneTd, handymanSelect, fol);
     } else {

@@ -1,5 +1,6 @@
 const shiftLeaderName = document.getElementById("shift-leader-name");
 const leaderSelect = document.createElement("select");
+leaderSelect.className = "box minimal";
 const leaderPhone = document.getElementById("shift-leader-phoneNumber");
 let shiftLeader;
 
