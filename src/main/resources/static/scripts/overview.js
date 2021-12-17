@@ -47,10 +47,10 @@ fetch(baseURL + "/caseTypes")
 fetch(baseURL + "/waitinglist")
     .then(response => response.json())
     .then(result => {
-        waitingList(result);
+        waitingListNumber(result);
     });
 
-function waitingList(waitingList) {
+function waitingListNumber(waitingList) {
     if (waitingList.cases.length == 0) {
         document.getElementById("waiting-list-div").innerHTML = `
     <h2>Sager i kø</h2>
