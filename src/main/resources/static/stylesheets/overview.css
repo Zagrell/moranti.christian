@@ -26,10 +26,9 @@
 }
 
 .modal-content {
-
     background-color: #fefefe;
     margin: 15% auto;
-    width: 11rem;
+    width: max-content;
     padding: 0 15px 15px 15px;
     border: 1px solid rgba(128, 128, 128, 0.39);
     border-radius: 10px;
@@ -41,6 +40,11 @@
 
 .modal-content input, .modal-content select {
     margin-bottom: 8px;
+}
+
+.overview-modal {
+    display: flex;
+    gap: 10px;
 }
 
 .shift-leader-info {
@@ -63,4 +67,9 @@
     background-color: #c2c0c0;
     width: 1182px;
     overflow: auto;
+}
+
+#new-waitlist-div {
+    display: none;
+
 }

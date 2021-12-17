@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../stylesheets/overview.css">
     <link rel="stylesheet" href="../stylesheets/global.css">
+    <link rel="stylesheet" href="../stylesheets/overview.css">
     <meta charset="UTF-8">
     <title>Ude og hjemme</title>
 </head>
@@ -28,7 +28,11 @@
 <div class="table-div" class="table">
 
     <table id="shift-table">
-        <caption><h3>Vagter<button id="add-shift-button">➕</button></h3></caption>
+        <caption>
+            <h3>Vagter
+                <button id="add-shift-button">➕</button>
+            </h3>
+        </caption>
         <thead>
         <tr>
             <th>Bil#</th>
@@ -48,7 +52,11 @@
         <tbody id="shift-tbody"></tbody>
     </table>
     <table id="graffiti-table">
-        <caption><h3>Graffiti<button id="add-graffiti-button">➕</button></h3></caption>
+        <caption>
+            <h3>Graffiti
+                <button id="add-graffiti-button">➕</button>
+            </h3>
+        </caption>
         <thead>
         <tr>
             <th>Bil#</th>
@@ -68,7 +76,11 @@
         <tbody id="graffiti-tbody"></tbody>
     </table>
     <table id="foal-table">
-        <caption><h3>Føl<button id="add-intern-button">➕</button></h3></caption>
+        <caption>
+            <h3>Føl
+                <button id="add-intern-button">➕</button>
+            </h3>
+        </caption>
         <thead>
         <tr>
             <th>Føl</th>
@@ -86,21 +98,33 @@
     </table>
 </div>
 
+
 <div id="new-case-modal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
         <br>
-        <h3>Tildel ny sag</h3>
-        <label for="new-case-number">Sagsnummer</label><br><input type="number" id="new-case-number">
-        <br>
-        <label for="new-case-area">Område</label><br><input type="text" id="new-case-area">
-        <br>
-        <label for="new-case-type">Type</label><br><select name="type" id="new-case-type"></select>
-        <br>
-        <div id="new-case-submit"></div>
+        <div class="overview-modal">
+            <div>
+                <h3>Tildel ny sag</h3>
+                <label for="new-case-number">Sagsnummer</label><br><input type="number" id="new-case-number">
+                <br>
+                <label for="new-case-area">Område</label><br><input type="text" id="new-case-area">
+                <br>
+                <label for="new-case-type">Type</label><br><select name="type" id="new-case-type"></select>
+                <br>
+                <div id="new-case-submit"></div>
+            </div>
+            <div id="new-waitlist-div">
+                <h3>Der er sager i vent</h3>
+                <label for="new-waitlist-case-select">Sager i vent</label><select id="new-waitlist-case-select"
+                                                                                  class="waiting-select"></select>
+
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script src="../scripts/global.js"></script>
 <script src="../scripts/shiftleader.js"></script>

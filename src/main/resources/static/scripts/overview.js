@@ -7,10 +7,14 @@ const foalTable = document.getElementById("foal-table");
 const newCaseModal = document.getElementById("new-case-modal");
 const newCaseSubmit = document.getElementById("new-case-submit");
 const procedureDiv = document.getElementById("procedure-text-div");
+const waitingListDropdown = document.getElementById("new-waitlist-case-select");
+const waitingListDiv = document.getElementById("new-waitlist-div");
 const normal = "normal";
 const graffiti = "graffiti";
 const fol = "fol";
 const sanitorEndPoint = "sanitor";
+let waitingList;
+
 
 fetchShifts();
 
@@ -46,6 +50,49 @@ fetch(baseURL + "/procedure")
         createProcedure(result)
     });
 
+
+
+// Waitinglist cases
+function waitListCaseGeneration () {
+
+
+    fetch(baseURL + "/waitinglist")
+        .then(response => response.json())
+        .then(result => {
+            if (result.cases != null && result.cases.length) {
+                waitingList = result;
+                waitingListDiv.style.display = "block";
+                waitingListDropdown.innerHTML = "";
+                console.log("hej christian noob bitch");
+                let defaultOption;
+                defaultOption = document.createElement("option");
+                defaultOption.value = "default";
+                defaultOption.defaultSelected = "true";
+                defaultOption.disabled = "true";
+                defaultOption.innerText = "Vælg en sag i vent";
+                waitingListDropdown.appendChild(defaultOption);
+                result.cases.forEach(waitingCase => {
+                    const caseOption = document.createElement("option");
+                    caseOption.value = waitingCase.caseNumber;
+                    caseOption.innerText = waitingCase.caseNumber + " | " + waitingCase.caseType.type + " | " + waitingCase.area;
+                    waitingListDropdown.appendChild(caseOption);
+                })
+            }
+        })
+}
+waitingListDropdown.addEventListener("change", () => {
+    const waitingCase = waitingList.cases.find(waitingCase => waitingCase.caseNumber === Number(waitingListDropdown.value))
+
+    document.getElementById("new-case-number").value = waitingCase.caseNumber;
+    document.getElementById("new-case-type").value = waitingCase.caseType.id;
+    document.getElementById("new-case-area").value = waitingCase.area;
+
+    if (waitingListDropdown.options[0].value === "default") {
+        waitingListDropdown.remove(0);
+    }
+
+})
+
 procedureDiv.addEventListener("focusout", () => {
     fetch(baseURL + "/procedure", {
         method: "PUT",
@@ -61,7 +108,7 @@ procedureDiv.addEventListener("focusout", () => {
 })
 
 function createProcedure(procedure) {
-        procedureDiv.innerText = procedure.procedureText;
+    procedureDiv.innerText = procedure.procedureText;
 }
 
 function createShiftTableRow(shift) {
@@ -154,6 +201,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         submitCaseButton.innerText = "Tildel Sag";
 
         addCaseButton.addEventListener("click", () => {
+            waitListCaseGeneration();
             newCaseSubmit.appendChild(submitCaseButton);
             newCaseModal.style.display = "block";
         });
@@ -340,12 +388,16 @@ window.onclick = function (event) {
     if (event.target === newCaseModal) {
         newCaseModal.style.display = "none";
         newCaseSubmit.innerHTML = "";
+        document.getElementById("new-case-number").value = "";
+        document.getElementById("new-case-area").value = "";
     }
 }
 
 document.getElementsByClassName("close")[0].onclick = function () {
     newCaseModal.style.display = "none";
     newCaseSubmit.innerHTML = "";
+    document.getElementById("new-case-number").value = "";
+    document.getElementById("new-case-area").value = "";
 }
 
 // With help from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_table_number
