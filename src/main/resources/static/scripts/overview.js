@@ -47,7 +47,8 @@ fetch(baseURL + "/caseTypes")
 fetch(baseURL + "/waitinglist")
     .then(response => response.json())
     .then(result => {
-        waitingListNumber(result);
+        waitingList = result;
+        waitingListNumber(waitingList)
     });
 
 function waitingListNumber(waitingList) {
@@ -73,11 +74,8 @@ fetch(baseURL + "/procedure")
     });
 
 
-
 // Waitinglist cases
-function waitListCaseGeneration () {
-
-
+function waitListCaseGeneration() {
     fetch(baseURL + "/waitinglist")
         .then(response => response.json())
         .then(result => {
@@ -102,6 +100,7 @@ function waitListCaseGeneration () {
             }
         })
 }
+
 waitingListDropdown.addEventListener("change", () => {
     const waitingCase = waitingList.cases.find(waitingCase => waitingCase.caseNumber === Number(waitingListDropdown.value))
 
@@ -246,10 +245,12 @@ function constructShiftTableRow(shiftTableRow, shift) {
                     newCaseModal.style.display = "none";
                     newCaseSubmit.innerHTML = "";
                     caseNumberTd.innerText = caseToCreate.caseNumber;
-                    typeTd.innerText = caseToCreate.caseType;
+                    typeTd.innerText = caseToCreate.caseType.type;
                     areaTd.innerText = caseToCreate.area;
                     document.getElementById("new-case-number").value = "";
                     document.getElementById("new-case-area").value = "";
+                    waitingList.cases = waitingList.cases.filter(waitingCase => waitingCase.caseNumber != caseToCreate.caseNumber);
+                    waitingListNumber(waitingList);
                     fetchShifts();
                 } else {
                     console.log("Error med at oprette en case")
