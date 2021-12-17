@@ -85,7 +85,6 @@ function waitListCaseGeneration () {
                 waitingList = result;
                 waitingListDiv.style.display = "block";
                 waitingListDropdown.innerHTML = "";
-                console.log("hej christian noob bitch");
                 let defaultOption;
                 defaultOption = document.createElement("option");
                 defaultOption.value = "default";
@@ -348,7 +347,6 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                     .then(response => {
                         if (response.status === 200) {
                             if (defaultOption != null) {
-                                console.log("hej med dig ")
                                 carSelect.remove(defaultOption);
                                 defaultOption = null;
                             }
