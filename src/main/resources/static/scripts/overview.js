@@ -51,16 +51,16 @@ fetch(baseURL + "/waitinglist")
     });
 
 function waitingListNumber(waitingList) {
-    if (waitingList.cases.length == 0) {
+    if (waitingList.cases.length === 0) {
         document.getElementById("waiting-list-div").innerHTML = `
     <h2>Sager i kø</h2>
     <h1 id="waiting-cases-green">${waitingList.cases.length}</h1>
-    `
+    `;
     } else {
         document.getElementById("waiting-list-div").innerHTML = `
     <h2>Sager i kø</h2>
     <h1 id="waiting-cases-red">${waitingList.cases.length}</h1>
-    `
+    `;
     }
 }
 
