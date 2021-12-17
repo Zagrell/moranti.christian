@@ -9,9 +9,11 @@
 <body>
 <nav id="nav-bar"></nav>
 
-<div id="procedure-text-div" contenteditable="true"></div>
 
-<div class="top-div">
+<div class="relative">
+    <div id="procedure-text-div" contenteditable="true"></div>
+    <div id="waiting-list-div"></div>
+
     <div id="shift-leader-div">
         <div class="shift-leader-info">
             <p>Vagtleder:</p>
@@ -22,68 +24,82 @@
             <p id="shift-leader-phoneNumber"></p>
         </div>
     </div>
-    <div id="waiting-list-div">Veneteliste Tal</div>
 </div>
 
-<div class="table-div" class="table">
+<div class="relative">
+    <br>
+    <br>
+    <div class="table-div" class="table">
+        <table id="shift-table">
+            <caption>
+                <h3>Vagter
+                    <button id="add-shift-button">➕</button>
+                </h3>
+            </caption>
+            <thead>
+            <tr>
+                <th>Bil#</th>
+                <th>Vagttelefon</th>
+                <th>Nummerplade</th>
+                <th>Sanitør</th>
+                <th>Arbejdstelefon</th>
+                <th>Prioritet</th>
+                <th>Sagsnummer</th>
+                <th>Type</th>
+                <th>Område</th>
+                <th>Bemærkning</th>
+                <th>Handlinger</th>
+            </tr>
+            </thead>
 
-    <table id="shift-table">
-        <caption><h3>Vagter<button id="add-shift-button">➕</button></h3></caption>
-        <thead>
-        <tr>
-            <th>Bil#</th>
-            <th>Vagttelefon</th>
-            <th>Nummerplade</th>
-            <th>Sanitør</th>
-            <th>Arbejdstelefon</th>
-            <th>Prioritet</th>
-            <th>Sagsnummer</th>
-            <th>Type</th>
-            <th>Område</th>
-            <th>Bemærkning</th>
-            <th>Handlinger</th>
-        </tr>
-        </thead>
+            <tbody id="shift-tbody"></tbody>
+        </table>
+        <table id="graffiti-table">
+            <caption>
+                <h3>Graffiti
+                    <button id="add-graffiti-button">➕</button>
+                </h3>
+            </caption>
+            <thead>
+            <tr>
+                <th>Bil#</th>
+                <th>Vagttelefon</th>
+                <th>Nummerplade</th>
+                <th>Sanitør</th>
+                <th>Arbejdstelefon</th>
+                <th>Prioritet</th>
+                <th>Sagsnummer</th>
+                <th>Type</th>
+                <th>Område</th>
+                <th>Bemærkning</th>
+                <th>Handlinger</th>
+            </tr>
+            </thead>
 
-        <tbody id="shift-tbody"></tbody>
-    </table>
-    <table id="graffiti-table">
-        <caption><h3>Graffiti<button id="add-graffiti-button">➕</button></h3></caption>
-        <thead>
-        <tr>
-            <th>Bil#</th>
-            <th>Vagttelefon</th>
-            <th>Nummerplade</th>
-            <th>Sanitør</th>
-            <th>Arbejdstelefon</th>
-            <th>Prioritet</th>
-            <th>Sagsnummer</th>
-            <th>Type</th>
-            <th>Område</th>
-            <th>Bemærkning</th>
-            <th>Handlinger</th>
-        </tr>
-        </thead>
+            <tbody id="graffiti-tbody"></tbody>
+        </table>
+        <table id="foal-table">
+            <caption>
+                <h3>Føl
+                    <button id="add-intern-button">➕</button>
+                </h3>
+            </caption>
+            <thead>
+            <tr>
+                <th>Føl</th>
+                <th>Arbejdstelefon</th>
+                <th>Prioritet</th>
+                <th>Sagsnummer</th>
+                <th>Type</th>
+                <th>Område</th>
+                <th>Bemærkning</th>
+                <th>Handlinger</th>
+            </tr>
+            </thead>
 
-        <tbody id="graffiti-tbody"></tbody>
-    </table>
-    <table id="foal-table">
-        <caption><h3>Føl<button id="add-intern-button">➕</button></h3></caption>
-        <thead>
-        <tr>
-            <th>Føl</th>
-            <th>Arbejdstelefon</th>
-            <th>Prioritet</th>
-            <th>Sagsnummer</th>
-            <th>Type</th>
-            <th>Område</th>
-            <th>Bemærkning</th>
-            <th>Handlinger</th>
-        </tr>
-        </thead>
-
-        <tbody id="foal-tbody"></tbody>
-    </table>
+            <tbody id="foal-tbody"></tbody>
+        </table>
+    </div>
 </div>
 
 <div id="new-case-modal" class="modal">

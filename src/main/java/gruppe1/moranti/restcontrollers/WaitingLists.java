@@ -73,5 +73,4 @@ public class WaitingLists {
         waitingListRepository.save(waitingList);
     }
 
-
 }

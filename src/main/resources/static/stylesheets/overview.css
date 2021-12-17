@@ -8,6 +8,31 @@
     flex-grow: 1;
 }
 
+#shift-leader-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-585%, 10%);
+}
+
+
+#waiting-list-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(620%, -50%);
+}
+
+#waiting-cases-green {
+    color: green;
+    text-align: center;
+}
+
+#waiting-cases-red {
+    color: red;
+    text-align: center;
+}
+
 #procedure-tekst-div {
     flex-grow: 3;
     align-self: flex-end;
@@ -61,6 +86,6 @@
     cursor: text;
     margin: auto;
     background-color: #c2c0c0;
-    width: 1182px;
+    width: 75rem;
     overflow: auto;
 }

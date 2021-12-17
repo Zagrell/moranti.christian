@@ -44,6 +44,10 @@
     margin: auto;
 }
 
+.relative {
+    position: relative;
+}
+
 /*With help from https://stackoverflow.com/questions/7849112/css-how-to-add-round-corners-when-hover-li-element/7849193*/
 #nav-bar p:hover {
     background-color: mintcream;
@@ -55,6 +59,7 @@
 body {
     padding-top: 7rem;
     background-color: lightgrey;
+    /*overflow: auto auto;*/
 }
 
 .center {
