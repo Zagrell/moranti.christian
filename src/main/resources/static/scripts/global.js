@@ -2,6 +2,8 @@ const baseURL = "http://localhost:8080";
 const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML = `
+
+
     <div id="shift-leader-div">
         <div class="shift-leader-info">
         <ul>
@@ -16,8 +18,7 @@ navBar.innerHTML = `
         </ul>
         </div>
     </div>
-
-<div class="middle">
+    <div class="middle">
     <a href="../html/overview.html">
         <p><b>Overblik</b></p>
     </a>
