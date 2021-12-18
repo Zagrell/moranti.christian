@@ -91,7 +91,6 @@ public class Shifts {
     }
 
 
-
     @PatchMapping("/shifts/carchange/{id}")
     public Shift updateCarShift(@PathVariable Long id, @RequestBody Long carNumber) {
         Shift shiftToUpdate = shiftRepository.findById(id).get();
@@ -141,15 +140,47 @@ public class Shifts {
         return shift;
     }
 
-    @PutMapping("/shifts/{id}")
-    public String updateShiftById(@PathVariable Long id, @RequestBody Shift shiftToUpdateWith) {
-        if (shiftRepository.existsById(id)) {
-            shiftToUpdateWith.setId(id);
-            shiftRepository.save(shiftToUpdateWith);
-            return "Shift was created";
-        } else {
-            return "Shift not found";
+    @PatchMapping("/shifts/increasePrio/{id}")
+    public boolean increasePrio(@PathVariable Long id) {
+        Shift shift = shiftRepository.findById(id).get();
+        int prio = shift.getPriority();
+
+        List<Shift> shifts = shiftRepository.findAllByShiftType(shift.getShiftType());
+
+        if (prio < shifts.size()) {
+            for (Shift s : shifts) {
+                if (s.getPriority() == prio + 1) {
+                    s.setPriority(prio);
+                    shift.setPriority(prio + 1);
+                    shiftRepository.save(s);
+                    shiftRepository.save(shift);
+                    return true;
+                }
+            }
         }
+        return false;
+    }
+
+    @PatchMapping("/shifts/decreasePrio/{id}")
+    public boolean decreasePrio(@PathVariable Long id) {
+        Shift shift = shiftRepository.findById(id).get();
+        int prio = shift.getPriority();
+
+        if (prio > 1) {
+            List<Shift> shifts = shiftRepository.findAllByShiftType(shift.getShiftType());
+
+
+            for (Shift s : shifts) {
+                if (s.getPriority() == prio - 1) {
+                    s.setPriority(prio);
+                    shift.setPriority(prio - 1);
+                    shiftRepository.save(s);
+                    shiftRepository.save(shift);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

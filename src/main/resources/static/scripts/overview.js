@@ -185,17 +185,19 @@ function constructShiftTableRow(shiftTableRow, shift) {
     employeeTd.appendChild(handymanSelect);
 
     //Prioriteter
+    const prioP = document.createElement("p");
     switch (shift.priority) {
         case 101:
-            priorityTd.innerText = "Ude";
+            prioP.innerText = "Ude";
             shiftTableRow.style.backgroundColor = "#8c1f1f";
             break;
         case 102:
-            priorityTd.innerText = "Kører ikke";
+            prioP.innerText = "Kører ikke";
             break;
         default:
-            priorityTd.innerText = shift.priority;
+            prioP.innerText = shift.priority;
     }
+    priorityTd.appendChild(prioP);
 
     //Tilføj sag og sæt ledig
     if (shift.shiftCase != undefined) {
@@ -224,6 +226,46 @@ function constructShiftTableRow(shiftTableRow, shift) {
         const submitCaseButton = document.createElement("button");
         submitCaseButton.className = "button1";
         submitCaseButton.innerText = "Tildel Sag";
+        const increasePrioButton = document.createElement("button");
+        increasePrioButton.innerText = "🔽";
+        increasePrioButton.className = "small-button"
+        const decreasePrioButton = document.createElement("button");
+        decreasePrioButton.innerText = "🔼";
+        decreasePrioButton.className = "small-button"
+        const editPrioDiv = document.createElement("div");
+        editPrioDiv.style.display = "flex";
+        editPrioDiv.style.flexDirection = "column";
+        editPrioDiv.style.justifyContent = "center";
+        editPrioDiv.appendChild(decreasePrioButton);
+        editPrioDiv.appendChild(increasePrioButton);
+        priorityTd.appendChild(editPrioDiv);
+        priorityTd.style.display = "flex";
+        priorityTd.style.justifyContent = "space-evenly";
+
+        increasePrioButton.addEventListener("click", () => {
+            fetch(baseURL+"/shifts/increasePrio/" + shift.id, {
+                method : "PATCH"
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if(result){
+                        fetchShifts();
+                    }
+                })
+        })
+
+        decreasePrioButton.addEventListener("click", () => {
+            fetch(baseURL+"/shifts/decreasePrio/" + shift.id, {
+                method : "PATCH"
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if(result){
+                        fetchShifts();
+                    }
+                })
+        })
+
 
         addCaseButton.addEventListener("click", () => {
             waitListCaseGeneration();
@@ -440,8 +482,8 @@ function sortTable(tableToSort) {
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("td")[5];
             y = rows[i + 1].getElementsByTagName("td")[5];
-            xNum = isNaN(x.innerText) ? 100 : Number(x.innerText);
-            yNum = isNaN(y.innerText) ? 100 : Number(y.innerText);
+            xNum = isNaN(x.firstChild.innerText) ? 100 : Number(x.firstChild.innerText);
+            yNum = isNaN(y.firstChild.innerText) ? 100 : Number(y.firstChild.innerText);
             if (xNum > yNum) {
                 shouldSwitch = true;
                 break;
