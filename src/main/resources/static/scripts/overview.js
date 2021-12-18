@@ -59,7 +59,7 @@ function waitingListNumber(waitingList) {
     `;
     } else {
         document.getElementById("waiting-list-div").innerHTML = `
-    <h2>Sager i kø</h2>
+    <h2 style="color: red">Sager i kø</h2>
     <h1 id="waiting-cases-red">${waitingList.cases.length}</h1>
     `;
     }
