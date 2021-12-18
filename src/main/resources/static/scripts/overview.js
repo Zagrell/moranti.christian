@@ -205,6 +205,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
         areaTd.innerText = shift.shiftCase.area;
 
         const removeCaseButton = document.createElement("button");
+        removeCaseButton.className = "button1";
         removeCaseButton.innerText = "Sæt ledig";
         actionsTd.appendChild(removeCaseButton);
         removeCaseButton.addEventListener("click", () => {
@@ -218,8 +219,10 @@ function constructShiftTableRow(shiftTableRow, shift) {
         })
     } else {
         const addCaseButton = document.createElement("button");
+        addCaseButton.className = "button1";
         addCaseButton.innerText = "➕";
         const submitCaseButton = document.createElement("button");
+        submitCaseButton.className = "button1";
         submitCaseButton.innerText = "Tildel Sag";
 
         addCaseButton.addEventListener("click", () => {
@@ -278,6 +281,7 @@ function constructShiftTableRow(shiftTableRow, shift) {
 
     //Slet vagt
     const deleteShiftButton = document.createElement("button");
+    deleteShiftButton.className = "button1";
     deleteShiftButton.innerText = "❌";
 
     deleteShiftButton.addEventListener("click", () => {
@@ -320,7 +324,7 @@ function pickCar(shift, shiftTelephoneTd, licencePlateTd, carSelect) {
                 defaultOption = document.createElement("option");
                 defaultOption.defaultSelected = "true";
                 defaultOption.disabled = "true";
-                defaultOption.innerText = "Vælg en bil";
+                defaultOption.innerText = "-";
                 carSelect.appendChild(defaultOption);
             }
             result = result.filter(car => car.type.toLowerCase() == shift.shiftType.toLowerCase())
@@ -373,7 +377,7 @@ function pickHandyman(shift, workPhoneNumberTd, handymanSelect, endPoint) {
                 defaultOption = document.createElement("option");
                 defaultOption.defaultSelected = "true";
                 defaultOption.disabled = "true";
-                defaultOption.innerText = "Vælg en vagt";
+                defaultOption.innerText = "-";
                 handymanSelect.appendChild(defaultOption);
             }
             result.forEach(handyman => {

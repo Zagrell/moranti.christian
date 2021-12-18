@@ -26,8 +26,11 @@ function constructEmployeeTableRow(employeeTableRow, employee) {
 
     //BTN
     const updateEmployeeButton = document.createElement("button");
+    updateEmployeeButton.className = "button1";
     const acceptUpdateButton = document.createElement("button");
+    acceptUpdateButton.className = "button1";
     const deleteEmployeeButton = document.createElement("button");
+    deleteEmployeeButton.className = "button1";
 
     actionTd.appendChild(updateEmployeeButton);
     actionTd.appendChild(acceptUpdateButton);

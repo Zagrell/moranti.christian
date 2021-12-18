@@ -26,8 +26,11 @@ function constructCarTableRow(tableRow, car) {
 
     //Button consts
     const updateCarButton = document.createElement("button");
+    updateCarButton.className = "button1";
     const acceptUpdateButton = document.createElement("button");
+    acceptUpdateButton.className = "button1";
     const deleteCarButton = document.createElement("button");
+    deleteCarButton.className = "button1";
 
     actionTd.appendChild(updateCarButton);
     actionTd.appendChild(acceptUpdateButton);
@@ -53,6 +56,7 @@ function constructCarTableRow(tableRow, car) {
         const shiftPhoneNumberInput = document.createElement("input");
         const licencePlateInput = document.createElement("input");
         const typeSelect = document.createElement("select");
+        typeSelect.className = "box minimal";
 
         //CarNumber feltet sættet value for inputtet, og resettet innertext tomt
         carNumberInput.type = "number";

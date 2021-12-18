@@ -20,8 +20,11 @@ function constructCaseTypeTableRow(tableRow, caseType) {
     const actionTd = document.createElement("td");
 
     const updateCaseTypeButton = document.createElement("button");
+    updateCaseTypeButton.className = "button1";
     const acceptUpdateButton = document.createElement("button");
+    acceptUpdateButton.className = "button1";
     const deleteCaseTypeButton = document.createElement("button");
+    deleteCaseTypeButton.className = "button1";
 
     caseTypeTd.innerText = caseType.type;
 

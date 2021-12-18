@@ -37,8 +37,11 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
 
 
     const updateCaseButton = document.createElement("button");
+    updateCaseButton.className = "button1";
     const acceptUpdateButton = document.createElement("button");
+    acceptUpdateButton.className = "button1";
     const deleteCaseButton = document.createElement("button");
+    deleteCaseButton.className = "button1";
 
     actionTd.appendChild(updateCaseButton);
     actionTd.appendChild(acceptUpdateButton);
@@ -56,6 +59,7 @@ function constructWaitingListTableRow(tableRow, waitingCase) {
     updateCaseButton.addEventListener("click", () => {
         const caseNumberInput = document.createElement("input");
         const caseTypeInput = document.createElement("select");
+        caseTypeInput.className = "box minimal";
         const caseAreaInput = document.createElement("input");
 
         caseNumberInput.type = "number";
