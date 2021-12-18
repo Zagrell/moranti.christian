@@ -4,7 +4,20 @@ const baseURL = "http://localhost:8080";
 const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML = `
-
+    <div id="shift-leader-div">
+        <div class="shift-leader-info">
+        <ul>
+            <li>Vagtleder:</li>
+            <li id="shift-leader-name"></li>
+        </ul>
+        </div>
+        <div class="shift-leader-info">
+        <ul>
+            <li>Telefonnummer:</li>
+            <li id="shift-leader-phoneNumber"></li>
+        </ul>
+        </div>
+    </div>
 
 <div class="middle">
     <a href="../html/overview.html">

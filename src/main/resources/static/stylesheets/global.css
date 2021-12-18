@@ -35,6 +35,18 @@
 
 }
 
+/*With help from https://stackoverflow.com/questions/7849112/css-how-to-add-round-corners-when-hover-li-element/7849193*/
+#nav-bar p:hover {
+    background-color: mintcream;
+    cursor: pointer;
+    color: #143c5a;
+    border-radius: 10px 10px 10px 10px;
+}
+
+#nav-bar h3, h4 {
+    color: white;
+}
+
 .logo {
     height: 4.69rem;
     width: 18.75rem;
@@ -46,14 +58,6 @@
 
 .relative {
     position: relative;
-}
-
-/*With help from https://stackoverflow.com/questions/7849112/css-how-to-add-round-corners-when-hover-li-element/7849193*/
-#nav-bar p:hover {
-    background-color: mintcream;
-    cursor: pointer;
-    color: #143c5a;
-    border-radius: 10px 10px 10px 10px;
 }
 
 body {
@@ -257,4 +261,25 @@ select::-ms-expand {
     background-repeat: no-repeat;
     border-color: #1c1a1a;
     outline: 0;
+}
+
+#shift-leader-div {
+    position: absolute;
+}
+
+#shift-leader-div a{
+    text-decoration: none;
+    color: white;
+}
+
+.shift-leader-info {
+    display: flex;
+}
+
+.shift-leader-info ul{
+    list-style-type: none;
+}
+
+.shift-leader-info li{
+    color: white;
 }
