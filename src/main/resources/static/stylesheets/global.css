@@ -120,10 +120,11 @@ h2, h3 {
 }
 
 .table-div td {
-    padding: 1rem;
     word-wrap: break-word;
     max-width: 15rem;
     text-align: center;
+    padding: 0.1rem;
+
 }
 
 .table-div tr {

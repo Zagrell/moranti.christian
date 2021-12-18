@@ -165,7 +165,6 @@ function constructShiftTableRow(shiftTableRow, shift) {
     const areaTd = document.createElement("td");
     const commentTd = document.createElement("td");
     const actionsTd = document.createElement("td");
-    actionsTd.style.display = "flex";
 
     //Definere en bil
     const carSelect = document.createElement("select");
