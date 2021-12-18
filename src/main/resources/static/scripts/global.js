@@ -1,6 +1,4 @@
 const baseURL = "http://localhost:8080";
-
-
 const navBar = document.getElementById("nav-bar");
 
 navBar.innerHTML = `
@@ -40,11 +38,19 @@ navBar.innerHTML = `
 
 `;
 
-
-let currentDate = new Date();
-let oneJan = new Date(currentDate.getFullYear(), 0, 1);
-let numberOfDays = Math.floor((currentDate - oneJan) / (24 * 60 * 60 * 1000));
-let result = Math.ceil((currentDate.getDay() + 1 + numberOfDays) / 7) - 1;
+//Lavet med hjælp fra https://stackoverflow.com/questions/6117814/get-week-of-year-in-javascript-like-in-php
+function getWeekNumber(date) {
+    // Copy date so don't modify original
+    date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay()||7));
+    // Get first day of year
+    let yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+    // Calculate full weeks to the nearest Thursday and Return week number
+    return  Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
+let result = getWeekNumber(new Date());
 document.getElementById("week-number").innerText = "Uge " + result.toString();
 
 
